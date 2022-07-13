@@ -17,7 +17,7 @@ app.use(body_parser_1.default.urlencoded({ extended: true }));
 app.use('/public', express_1.default.static(path_1.default.join(__dirname, '../src', 'public')));
 console.log(__dirname, '======');
 app.get('/', (req, res) => {
-    res.render('home');
+    res.render('login');
 });
 app.listen(PORT, () => {
     console.log("App running on port: " + PORT);
