@@ -3,7 +3,7 @@ import bodyParser from "body-parser";
 import mongoose from "mongoose";
 import path from "path";
 import appRootPath from "path-root";
-
+const connectDb = require("./src/config/db");
 
 
 import session from "express-session";
@@ -16,13 +16,8 @@ app.set("view engine", "ejs");
 app.set('views', './src/views');
 
 
-const DB_URL = 'mongodb+srv://conbinhbe:Anhyeuem.123@modul4.a22t9.mongodb.net/?retryWrites=true&w=majority';
+connectDb();
 
-mongoose.connect(DB_URL)
-
-    .then(() => console.log('DB Connected!'))
-
-    .catch(error => console.log('DB connection error:', error.message));
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
