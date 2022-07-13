@@ -6,7 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const body_parser_1 = __importDefault(require("body-parser"));
 const mongoose_1 = __importDefault(require("mongoose"));
-const express_session_1 = __importDefault(require("express-session"));
+const path_1 = __importDefault(require("path"));
 const PORT = 3000;
 const app = (0, express_1.default)();
 app.set("view engine", "ejs");
@@ -16,19 +16,11 @@ mongoose_1.default.connect(DB_URL)
     .then(() => console.log('DB Connected!'))
     .catch(error => console.log('DB connection error:', error.message));
 app.use(body_parser_1.default.json());
-app.use((0, express_session_1.default)({
-    secret: 'SECRET',
-    resave: false,
-    saveUninitialized: true,
-    cookie: { maxAge: 60 * 60 * 1000 }
-}));
 app.use(body_parser_1.default.urlencoded({ extended: true }));
+app.use('/public', express_1.default.static(path_1.default.join(__dirname, '../src', 'public')));
+console.log(__dirname, '======');
 app.get('/', (req, res) => {
     res.render('home');
-});
-app.use(express_1.default.urlencoded({ extended: false }));
-app.use((req, res, next) => {
-    res.status(400).render('error');
 });
 app.listen(PORT, () => {
     console.log("App running on port: " + PORT);

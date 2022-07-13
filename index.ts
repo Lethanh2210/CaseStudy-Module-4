@@ -1,8 +1,8 @@
 import express from "express";
-
 import bodyParser from "body-parser";
-
 import mongoose from "mongoose";
+import path from "path";
+import appRootPath from "path-root";
 
 
 
@@ -25,22 +25,25 @@ mongoose.connect(DB_URL)
     .catch(error => console.log('DB connection error:', error.message));
 
 app.use(bodyParser.json());
-
-app.use(session({
-
-    secret: 'SECRET',
-
-    resave: false,
-
-    saveUninitialized: true,
-
-    cookie: { maxAge: 60 * 60 * 1000 }
-
-}));
-
-
-
 app.use(bodyParser.urlencoded({ extended: true }));
+
+app.use('/public', express.static(path.join(__dirname,'../src', 'public')))
+console.log(__dirname,'======')
+// app.use(session({
+//
+//     secret: 'SECRET',
+//
+//     resave: false,
+//
+//     saveUninitialized: true,
+//
+//     cookie: { maxAge: 60 * 60 * 1000 }
+//
+// }));
+
+
+
+
 
 
 app.get('/', (req, res) => {
@@ -48,13 +51,12 @@ app.get('/', (req, res) => {
 })
 
 
-app.use(express.urlencoded({ extended: false }));
 
 
 
-app.use((req,res,next)=>{
-    res.status(400).render('error');
-})
+// app.use((req,res,next)=>{
+//     res.status(400).render('error');
+// })
 
 
 app.listen(PORT, () => {
