@@ -45,7 +45,7 @@ export class AuthController {
             }
         });
         let mailOptions = {
-            to: req.body.email,
+            to: email,
             subject: "Otp for registration is: ",
             html: "<h3>OTP for account verification is </h3>" + "<h1 style='font-weight:bold;'>" + OTP + "</h1>" // html body
         };
@@ -55,12 +55,10 @@ export class AuthController {
                 return console.log(error);
             }
             const newOTP = new otpModel({
-                email: req.body.email,
                 otp: OTP
             });
             await newOTP.save();
-            res.cookie("email", String(req.body.email));
-            res.render('OTP', {email: req.body.email, notice: ""});
+
         });
 
     }
@@ -74,7 +72,7 @@ export class AuthController {
                 return res.send("Wrong email or password")
             }
             req.login(user, () => {
-                res.redirect("/book/list")
+                res.redirect("/cv")
             })
         })(req, res, next)
     }
@@ -82,9 +80,13 @@ export class AuthController {
     async checkOTP(req, res, next){
         let OTP = req.body.one + req.body.two + req.body.three + req.body.four + req.body.five + req.body.six;
         let otpDB = await otpModel.find().sort({time: -1});
-        let emailCookie = req.cookies["email"];
+        let emailCookie = req.cookies["email"]
+        let userDB = JSON.parse(req.cookies["user"]);
         if(otpDB.length > 0){
             if(otpDB[0].otp === OTP){
+                let user = new AccountModel(userDB);
+                await user.save();
+                res.cookie("user", '', {maxAge: 0})
                 res.cookie('email','', {maxAge: 0});
                 res.redirect("http://localhost:3000/auth/login");
             }else{

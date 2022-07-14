@@ -9,6 +9,7 @@ import authRoutes from "./src/routes/auth.router"
 import session from "express-session";
 import passport from "./src/controllers/passport";
 import cookieParser from 'cookie-parser';
+import auth from "./src/middlewares/auth.Middleware";
 
 
 const PORT = 3000;
@@ -43,6 +44,7 @@ app.use(passport.initialize());
 
 app.use(passport.session());
 
+app.use("/cv", auth.authCheck, cVRouter);
 app.use("/auth", authRoutes);
 
 
@@ -53,12 +55,6 @@ app.get('/', (req, res) => {
 })
 
 
-
-
-
-// app.use((req,res,next)=>{
-//     res.status(400).render('error');
-// })
 
 
 app.listen(PORT, () => {

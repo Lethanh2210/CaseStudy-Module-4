@@ -12,6 +12,7 @@ const auth_router_1 = __importDefault(require("./src/routes/auth.router"));
 const express_session_1 = __importDefault(require("express-session"));
 const passport_1 = __importDefault(require("./src/controllers/passport"));
 const cookie_parser_1 = __importDefault(require("cookie-parser"));
+const auth_Middleware_1 = __importDefault(require("./src/middlewares/auth.Middleware"));
 const PORT = 3000;
 const app = (0, express_1.default)();
 app.set("view engine", "ejs");
@@ -20,7 +21,6 @@ connectDb();
 app.use(body_parser_1.default.json());
 app.use((0, cookie_parser_1.default)());
 app.use('/public', express_1.default.static(path_1.default.join(__dirname, '../src', 'public')));
-app.use('/cv', job_router_1.default);
 app.use((0, express_session_1.default)({
     secret: 'SECRET',
     resave: false,
@@ -30,6 +30,7 @@ app.use((0, express_session_1.default)({
 app.use(body_parser_1.default.urlencoded({ extended: true }));
 app.use(passport_1.default.initialize());
 app.use(passport_1.default.session());
+app.use("/cv", auth_Middleware_1.default.authCheck, job_router_1.default);
 app.use("/auth", auth_router_1.default);
 app.get('/', (req, res) => {
     res.render('home');
