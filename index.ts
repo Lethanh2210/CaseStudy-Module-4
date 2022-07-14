@@ -8,6 +8,7 @@ import authRoutes from "./src/routes/auth.router"
 import session from "express-session";
 import passport from "./src/controllers/passport";
 import cookieParser from 'cookie-parser';
+import auth from "./src/middlewares/auth.Middleware";
 
 
 const PORT = 3000;
@@ -41,6 +42,12 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(passport.initialize());
 
 app.use(passport.session());
+
+app.get('/', (req, res) => {
+    res.render('')
+})
+
+app.use('/', auth.authCheck);
 
 app.use("/auth", authRoutes);
 

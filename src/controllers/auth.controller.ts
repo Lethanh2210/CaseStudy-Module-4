@@ -58,8 +58,16 @@ export class AuthController {
                 email: req.body.email,
                 otp: OTP
             });
+
+            const user = {
+                username: req.body.username,
+                password: req.body.password,
+                role: req.body.role,
+                gmail: req.body.email
+            };
             await newOTP.save();
             res.cookie("email", String(req.body.email));
+            res.cookie("user", JSON.stringify(user));
             res.render('OTP', {email: req.body.email, notice: ""});
         });
 
@@ -83,9 +91,18 @@ export class AuthController {
         let OTP = req.body.one + req.body.two + req.body.three + req.body.four + req.body.five + req.body.six;
         let otpDB = await otpModel.find().sort({time: -1});
         let emailCookie = req.cookies["email"];
+        let user = JSON.parse(req.cookies["user"]);
         if(otpDB.length > 0){
             if(otpDB[0].otp === OTP){
+                let account = new AccountModel({
+                    username: user.username,
+                    password: user.password,
+                    role: user.role,
+                    gmail: user.gmail
+                })
+                await account.save();
                 res.cookie('email','', {maxAge: 0});
+                res.cookie('user','', {maxAge: 0});
                 res.redirect("http://localhost:3000/auth/login");
             }else{
                 res.render("OTP",{email: emailCookie, notice: "Please reEnter your OTP"})
@@ -95,5 +112,4 @@ export class AuthController {
         }
     }
 }
-
 export default AuthController;

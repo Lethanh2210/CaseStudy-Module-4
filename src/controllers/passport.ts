@@ -88,7 +88,9 @@ passport.use(new GoogleStrategy({
 
                 username: profile.emails[0].value,
 
-                password: null
+                password: null,
+
+                role: "user"
 
             });
 
