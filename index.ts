@@ -3,6 +3,7 @@ import bodyParser from "body-parser";
 import mongoose from "mongoose";
 import path from "path";
 import appRootPath from "path-root";
+import cVRouter from "./src/routes/job.router"
 const connectDb = require("./src/config/db");
 import authRoutes from "./src/routes/auth.router"
 import session from "express-session";
@@ -66,5 +67,5 @@ app.listen(PORT, () => {
 
 })
 
-// thinh,thanh,phu
+// thinh
 

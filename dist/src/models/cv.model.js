@@ -1,13 +1,16 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.cvSchema = void 0;
+exports.jobSchema = exports.CvModel = void 0;
 const mongoose_1 = require("mongoose");
-const cvSchema = new mongoose_1.Schema({
+const jobSchema = new mongoose_1.Schema({
     avatar: String,
+    name: String,
     title: String,
+    salary: Number,
+    location: String,
     desc: String,
     duration: String
 });
-exports.cvSchema = cvSchema;
-const CvModel = (0, mongoose_1.model)('CV', cvSchema);
+exports.jobSchema = jobSchema;
+exports.CvModel = (0, mongoose_1.model)('account', jobSchema);
 //# sourceMappingURL=cv.model.js.map

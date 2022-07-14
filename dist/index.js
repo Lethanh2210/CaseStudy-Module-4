@@ -6,6 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const body_parser_1 = __importDefault(require("body-parser"));
 const path_1 = __importDefault(require("path"));
+const job_router_1 = __importDefault(require("./src/routes/job.router"));
 const connectDb = require("./src/config/db");
 const auth_router_1 = __importDefault(require("./src/routes/auth.router"));
 const express_session_1 = __importDefault(require("express-session"));
@@ -19,6 +20,7 @@ connectDb();
 app.use(body_parser_1.default.json());
 app.use((0, cookie_parser_1.default)());
 app.use('/public', express_1.default.static(path_1.default.join(__dirname, '../src', 'public')));
+app.use('/cv', job_router_1.default);
 app.use((0, express_session_1.default)({
     secret: 'SECRET',
     resave: false,

@@ -15,6 +15,3 @@ const cvSchema = new Schema<ICv>({
     duration: String
 })
 
-const CvModel = model<ICv>('CV', cvSchema);
-
-export {cvSchema};
