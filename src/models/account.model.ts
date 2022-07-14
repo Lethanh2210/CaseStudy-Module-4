@@ -5,6 +5,7 @@ interface IAccount {
     username: string;
     password: string;
     role: string;
+    gmail: string;
     google: {
 
         id: {
@@ -19,6 +20,7 @@ const accountSchema = new Schema<IAccount>({
     username: String,
     password: String,
     role: String,
+    gmail: String,
     google: {
 
         id: {

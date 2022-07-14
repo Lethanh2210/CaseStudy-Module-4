@@ -26,6 +26,7 @@ interface IAccount {
     username: string;
     password: string;
     role: string;
+    gmail: string;
     google: {
         id: {
             type: string;
