@@ -9,5 +9,5 @@ const cvSchema = new mongoose_1.Schema({
     duration: String
 });
 exports.cvSchema = cvSchema;
-const CvModel = (0, mongoose_1.model)('account', cvSchema);
+const CvModel = (0, mongoose_1.model)('CV', cvSchema);
 //# sourceMappingURL=cv.model.js.map

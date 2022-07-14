@@ -4,9 +4,10 @@ import mongoose from "mongoose";
 import path from "path";
 import appRootPath from "path-root";
 const connectDb = require("./src/config/db");
-
-
+import authRoutes from "./src/routes/auth.router"
 import session from "express-session";
+import passport from "./src/controllers/passport";
+import cookieParser from 'cookie-parser';
 
 
 const PORT = 3000;
@@ -20,29 +21,34 @@ connectDb();
 
 
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(cookieParser());
+
 
 app.use('/public', express.static(path.join(__dirname,'../src', 'public')))
-console.log(__dirname,'======')
-// app.use(session({
-//
-//     secret: 'SECRET',
-//
-//     resave: false,
-//
-//     saveUninitialized: true,
-//
-//     cookie: { maxAge: 60 * 60 * 1000 }
-//
-// }));
+app.use(session({
 
+    secret: 'SECRET',
 
+    resave: false,
+
+    saveUninitialized: true,
+
+    cookie: { maxAge: 60 * 60 * 1000 }
+
+}));
+
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(passport.initialize());
+
+app.use(passport.session());
+
+app.use("/auth", authRoutes);
 
 
 
 
 app.get('/', (req, res) => {
-    res.render('login');
+    res.render('home');
 })
 
 

@@ -26,6 +26,11 @@ interface IAccount {
     username: string;
     password: string;
     role: string;
+    google: {
+        id: {
+            type: string;
+        };
+    };
 }
 declare const AccountModel: import("mongoose").Model<IAccount, {}, {}, {}, any>;
 export { AccountModel };

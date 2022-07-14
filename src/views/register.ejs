@@ -9,38 +9,36 @@
     <div class="container">
         <div class="row">
             <div class="col-md-4 login-sec">
-                <h2 class="text-center">Login Now</h2>
-                <form class="login-form" action="/auth/login">
+                <h2 class="text-center">Sign Up</h2>
+                <form class="login-form" action="/auth/OTP" method="post">
                     <div class="form-group">
                         <label for="exampleInputEmail1">Username</label>
-                        <input type="text" class="form-control" placeholder="">
+                        <input type="text" class="form-control" placeholder="" name="username" required>
 
                     </div>
                     <div class="form-group">
                         <label for="exampleInputPassword1">Password</label>
-                        <input type="password" class="form-control" placeholder="">
+                        <input type="password" class="form-control" placeholder="" name="password" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputPassword2">Confirm Password</label>
+                        <input type="password" class="form-control" placeholder="" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputPassword1">Gmail</label>
+                        <input type="email" class="form-control" placeholder="" name="email" required>
                     </div>
 
-
                     <div class="form-check">
-                        <label class="form-check-label">
-                            <input type="checkbox" class="form-check-input">
-                            <small>Remember Me</small>
-                        </label>
-                        <button type="submit" class="btn btn-login float-right">Login</button>
+                        <button type="submit" class="btn btn-login float-right">Register</button>
                     </div>
 
 
                 </form>
-                <br>
-                <div class="form-group">
-                    <a class="btn btn-primary form-control google-plus" href="/auth/login/google"><img
-                                src="https://img.icons8.com/color/16/000000/google-logo.png"> Login With Google</a>
-                </div>
-                <br>
 
-                <p class="text-inverse text-center">Don't have any account ? <a href="http://localhost:3000/auth/register"
-                                                                                data-abc="true">Sign up</a></p>
+
+                <p class="text-inverse text-center">Already registered ? <a href="http://localhost:3000/auth/login"
+                                                                                data-abc="true">Login</a></p>
                 <div class="copy-text">Created with <i class="fa fa-heart"></i> by TT2k</div>
             </div>
             <div class="col-md-8 banner-sec">
