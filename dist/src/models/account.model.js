@@ -6,6 +6,7 @@ const accountSchema = new mongoose_1.Schema({
     username: String,
     password: String,
     role: String,
+    gmail: String,
     google: {
         id: {
             type: String,

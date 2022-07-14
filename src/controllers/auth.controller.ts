@@ -82,6 +82,7 @@ export class AuthController {
         let otpDB = await otpModel.find().sort({time: -1});
         let emailCookie = req.cookies["email"]
         let userDB = JSON.parse(req.cookies["user"]);
+        console.log(userDB);
         if(otpDB.length > 0){
             if(otpDB[0].otp === OTP){
                 let user = new AccountModel(userDB);
