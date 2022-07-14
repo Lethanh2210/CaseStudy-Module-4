@@ -22,11 +22,15 @@
 /// <reference types="mongoose/types/validation" />
 /// <reference types="mongoose/types/inferschematype" />
 import { Schema } from "mongoose";
-interface ICv {
+interface IJob {
     avatar: string;
+    name: string;
     title: string;
+    salary: number;
+    location: string;
     desc: string;
     duration: string;
 }
-declare const cvSchema: Schema<ICv, import("mongoose").Model<ICv, any, any, any, any>, {}, {}, any, {}, "type", ICv>;
-export { cvSchema };
+declare const jobSchema: Schema<IJob, import("mongoose").Model<IJob, any, any, any, any>, {}, {}, any, {}, "type", IJob>;
+export declare const CvModel: import("mongoose").Model<IJob, {}, {}, {}, any>;
+export { jobSchema };

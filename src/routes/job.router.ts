@@ -1,10 +1,11 @@
 import express from "express";
-import cvController from "../controllers/cv.controller"
+import jobController from "../controllers/job.controller"
 
 const router = express.Router();
 
-router.get('/',cvController.render);
-router.get('/jobs',cvController.renderJobs);
-
+router.get('/',jobController.render);
+router.get('/jobs',jobController.renderJobs);
+router.get('/createJob',jobController.renderJobCreate);
+router.post('/createJob',jobController.jobCreate);
 
 export default router;

@@ -3,24 +3,26 @@ import {Schema, model} from "mongoose";
 
 interface IJob {
     avatar: string,
-    name: string;
-    title: string;
+    companyName: string;
+    jobName: string;
     salary: number;
     location: string;
     desc: string;
-    duration: string; //thoi han
+    duration: string;
+    category: object;
 }
 
 const jobSchema = new Schema<IJob>({
     avatar: String,
-    name: String,
-    title: String,
+    companyName: String,
+    jobName: String,
     salary: Number,
     location: String,
     desc: String,
-    duration: String
-})
+    duration: String,
+    category: {type: Schema.Types.ObjectId,ref: "category"},}
+)
 
-export const CvModel = model<IJob>('account', jobSchema);
+export const JobModel = model<IJob>('job', jobSchema);
 
 export {jobSchema};
