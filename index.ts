@@ -44,12 +44,7 @@ app.use(passport.initialize());
 
 app.use(passport.session());
 
-app.get('/', (req, res) => {
-    res.render('')
-})
-
-app.use('/', auth.authCheck);
-
+app.use("/cv", auth.authCheck, cVRouter);
 app.use("/auth", authRoutes);
 
 
@@ -60,12 +55,6 @@ app.get('/', (req, res) => {
 })
 
 
-
-
-
-// app.use((req,res,next)=>{
-//     res.status(400).render('error');
-// })
 
 
 app.listen(PORT, () => {
