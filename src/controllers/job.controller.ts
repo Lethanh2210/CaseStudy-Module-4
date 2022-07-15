@@ -30,7 +30,7 @@ const jobController = {
                 category: req.body.category
             })
             const job = new JobModel({
-                avatar: `http://localhost:3000/public/uploads/${req.file.filename}`,
+                avatar: `/public/uploads/${req.file.filename}`,
                 companyName: req.body.company,
                 jobName: req.body.job,
                 salary: req.body.salary,
