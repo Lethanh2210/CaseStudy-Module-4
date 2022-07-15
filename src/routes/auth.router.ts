@@ -29,7 +29,7 @@ router.get(
 
     (req, res) => {
 
-        res.redirect('http://localhost:3000/cv')
+        res.redirect('/cv')
 
     }
 
@@ -54,7 +54,7 @@ router.post('/login', upload.none(), (req, res, next) => {
             return res.render('login',{notice: "Wrong password or username"})
         }
         req.login(user, () => {
-            res.redirect("http://localhost:3000/cv")
+            res.redirect("/cv")
         })
     })(req, res, next)
 
