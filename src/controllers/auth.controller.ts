@@ -97,6 +97,15 @@ export class AuthController {
             res.render("OTP",{email: emailCookie, notice: "OTP Expired"});
         }
     }
+
+    async existAccount(email, req,res,next){
+        let existingUser = await AccountModel.findOne({email: email});
+        if(existingUser){
+            return res.render("register", {notice: "Email already exists"})
+        }else{
+            next();
+        }
+    }
 }
 
 export default AuthController;
