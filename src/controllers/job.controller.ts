@@ -1,16 +1,20 @@
 import {JobModel} from "../models/job.model";
 import {CategoryModel} from "../models/category.model";
 import {Schema} from "mongoose";
+import multer from "multer";
+const upload = require('../middlewares/upload.middleware')
+import path from "path";
+import * as fs from "fs";
 
 
 const jobController = {
     render: async (req, res, next) => {
         const jobs = await JobModel.find();
-        res.render('home',{jobs:jobs});
+        res.render('home', {jobs: jobs});
     },
     renderJobs: async (req, res, next) => {
         const jobs = await JobModel.find();
-        res.render('jobs',{jobs:jobs})
+        res.render('jobs', {jobs: jobs})
     },
     renderJobDetails: async (req, res, next) => {
 
@@ -24,7 +28,7 @@ const jobController = {
                 category: req.body.category
             })
             const job = new JobModel({
-                avatar: req.body.avatar,
+                avatar: `http://localhost:3000/public/uploads/${req.file.filename}`,
                 companyName: req.body.company,
                 jobName: req.body.job,
                 salary: req.body.salary,
@@ -34,8 +38,8 @@ const jobController = {
                 category: category._id,
             })
             await job.save();
-            res.send('ok')
-        }catch (e) {
+            res.redirect('/cv')
+        } catch (e) {
             console.log(e.message);
         }
     }

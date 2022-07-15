@@ -60,7 +60,7 @@ router.post('/login', upload.none(), (req, res, next) => {
         }
 
         req.login(user, () => {
-            res.redirect("/book/list")
+            res.redirect("/cv")
 
         })
 

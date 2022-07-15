@@ -26,6 +26,8 @@ app.use(cookieParser());
 
 
 app.use('/public', express.static(path.join(__dirname,'../src', 'public')))
+// app.use(express.static(__dirname+'/public/uploads'));
+console.log(__dirname)
 app.use(session({
 
     secret: 'SECRET',
@@ -44,21 +46,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use("/auth", authRoutes);
-
-
-
-
-app.get('/', (req, res) => {
-    res.render('home');
-})
-
-
-
-
-
-// app.use((req,res,next)=>{
-//     res.status(400).render('error');
-// })
+app.use("/cv", cVRouter);
 
 
 app.listen(PORT, () => {
@@ -66,6 +54,4 @@ app.listen(PORT, () => {
     console.log("App running on port: " + PORT)
 
 })
-
-// thinh
 
