@@ -183,8 +183,12 @@
                     </div>
                 </div>
             </div>
+
             <div class="row justify-content-center">
                 <div class="col-xl-10">
+                    <% if (user.role === 'recruiter') { %>
+                        <a href="/cv/createJob" class="btn btn-primary">Thêm tin tuyển dụng</a>
+                    <%}%>
                     <% for (let job of jobs) { %>
                     <!-- single-job-content -->
                     <div class="single-job-items mb-30">
@@ -202,7 +206,7 @@
                             </div>
                         </div>
                         <div class="items-link f-right">
-                            <a href="job_details.html">Full Time</a>
+                            <a href="job_details.html">Apply</a>
                             <span>Duration: <%=job.duration%></span>
                         </div>
                     </div>

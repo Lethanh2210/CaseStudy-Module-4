@@ -2,6 +2,7 @@ import passport from "passport"
 
 import { AccountModel } from '../models/account.model'
 
+// import LocalStrategy from 'passport-local';
 import LocalStrategy from 'passport-local';
 
 import GoogleStrategy from 'passport-google-oauth20';
@@ -24,10 +25,9 @@ passport.deserializeUser(function (user, done) {
 
 
 
+// @ts-ignore
 passport.use('local', new LocalStrategy(async (username, password, done) => {
-
     const user = await AccountModel.findOne({ username: username });
-    console.log(user)
     if (!user) {
 
         return done(null, false);
@@ -48,6 +48,7 @@ passport.use('local', new LocalStrategy(async (username, password, done) => {
 
 }));
 
+// @ts-ignore
 passport.use(new GoogleStrategy({
 
         clientID: "1039469355921-dmdkk12cekfue6tk1j3qdvc2o0oks8s6.apps.googleusercontent.com",
@@ -88,7 +89,9 @@ passport.use(new GoogleStrategy({
 
                 username: profile.emails[0].value,
 
-                password: null
+                password: null,
+
+                role: "user"
 
             });
 

@@ -10,7 +10,9 @@ import * as fs from "fs";
 const jobController = {
     render: async (req, res, next) => {
         const jobs = await JobModel.find();
-        res.render('home', {jobs: jobs});
+
+        let user = req.session.passport.user;
+        res.render('home',{jobs:jobs, user:user});
     },
     renderJobs: async (req, res, next) => {
         const jobs = await JobModel.find();
