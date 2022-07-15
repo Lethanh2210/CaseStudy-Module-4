@@ -17,16 +17,15 @@ interface IAccount {
 }
 
 const accountSchema = new Schema<IAccount>({
-    username: String,
+    username: {type: String, unique: true},
     password: String,
     role: String,
-    gmail: String,
+    gmail: {type: String, unique: true},
     google: {
 
         id: {
 
             type: String,
-
         }
     }
 })

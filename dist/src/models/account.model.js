@@ -3,10 +3,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.AccountModel = void 0;
 const mongoose_1 = require("mongoose");
 const accountSchema = new mongoose_1.Schema({
-    username: String,
+    username: { type: String, unique: true },
     password: String,
     role: String,
-    gmail: String,
+    gmail: { type: String, unique: true },
     google: {
         id: {
             type: String,
