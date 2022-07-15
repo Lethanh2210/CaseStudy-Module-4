@@ -16,13 +16,15 @@ const jobController = {
     },
     renderJobs: async (req, res, next) => {
         const jobs = await JobModel.find();
-        res.render('jobs', {jobs: jobs})
+        let user = req.session.passport.user;
+        res.render('jobs', {jobs: jobs, user:user})
     },
     renderJobDetails: async (req, res, next) => {
 
     },
     renderJobCreate: async (req, res, next) => {
-        res.render('createJob')
+        let user = req.session.passport.user;
+        res.render('createJob',{user:user})
     },
     jobCreate: async (req, res, next) => {
         try {
