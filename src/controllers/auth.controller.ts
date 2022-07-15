@@ -89,7 +89,7 @@ export class AuthController {
                 await user.save();
                 res.cookie("user", '', {maxAge: 0})
                 res.cookie('email','', {maxAge: 0});
-                res.redirect("http://localhost:3000/auth/login");
+                res.redirect("/auth/login");
             }else{
                 res.render("OTP",{email: emailCookie, notice: "Please reEnter your OTP"})
             }
