@@ -1,8 +1,6 @@
 import express from "express";
 import bodyParser from "body-parser";
-import mongoose from "mongoose";
 import path from "path";
-import appRootPath from "path-root";
 import cVRouter from "./src/routes/job.router"
 const connectDb = require("./src/config/db");
 import authRoutes from "./src/routes/auth.router"
@@ -19,7 +17,9 @@ app.set("view engine", "ejs");
 app.set('views', './src/views');
 
 
-connectDb();
+connectDb().catch(r => {
+    console.log(r.message);
+});
 
 
 app.use(bodyParser.json());
