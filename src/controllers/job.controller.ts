@@ -17,7 +17,8 @@ const jobController = {
     },
     renderJobs: async (req, res, next) => {
         const jobs = await JobModel.find();
-        res.render('jobs', {jobs: jobs})
+        let user = req.session.passport.user;
+        res.render('jobs', {jobs: jobs, user:user})
     },
     renderUpdateJob: async (req, res, next) => {
         const updateData = await JobModel.findOne({_id: req.params.id}).lean();
@@ -27,7 +28,8 @@ const jobController = {
 
     },
     renderJobCreate: async (req, res, next) => {
-        res.render('createJob')
+        let user = req.session.passport.user;
+        res.render('createJob',{user:user})
     },
     jobCreate: async (req, res, next) => {
         try {
