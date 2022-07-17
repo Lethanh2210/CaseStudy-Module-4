@@ -22,7 +22,8 @@ const jobController = {
     },
     renderUpdateJob: async (req, res, next) => {
         const updateData = await JobModel.findOne({_id: req.params.id}).lean();
-        res.render('updateJob', {data: updateData});
+        let user = req.session.passport.user;
+        res.render('updateJob', {data: updateData, user: user});
     },
     renderJobDetails: async (req, res, next) => {
 
