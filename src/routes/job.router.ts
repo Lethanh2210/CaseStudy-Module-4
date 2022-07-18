@@ -31,6 +31,7 @@ router.post('/createJob',upload.single('image'),jobController.jobCreate);
 router.get('/updateJob/:id',jobController.renderUpdateJob);
 router.post('/updateJob/:id',jobController.updateJob);
 router.get('/deleteJob/:id',jobController.deleteJob);
-router.get('/apply/:id',upload.single('image'),jobController.applyJob);
+router.get('/apply/:id',jobController.applyJob);
+router.get('/writeCV/:id',jobController.writeCV);
 
 export default router;

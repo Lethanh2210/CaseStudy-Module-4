@@ -69,8 +69,15 @@ const jobController = {
     },
 
     applyJob:async (req, res, next) => {
+        const job = await JobModel.findOne({_id: req.params.id})
         let user = req.session.passport.user;
-        res.render('writeCV',{user:user})
+        res.render('jobDetails',{user:user, job: job})
+    },
+
+    writeCV:async (req, res, next) => {
+        const job = await JobModel.findOne({_id: req.params.id})
+        let user = req.session.passport.user;
+        res.render('writeCV',{user:user, job: job})
     }
 }
 
