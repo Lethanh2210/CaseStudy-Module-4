@@ -3,6 +3,7 @@ import bodyParser from "body-parser";
 import path from "path";
 import http from 'http';
 import cVRouter from "./src/routes/job.router"
+import hireRouter from "./src/routes/hire.router"
 const connectDb = require("./src/config/db");
 import authRoutes from "./src/routes/auth.router"
 import session from "express-session";
@@ -51,7 +52,8 @@ app.use(passport.initialize());
 
 app.use(passport.session());
 
-app.use("/cv", auth.authCheck, cVRouter);
+// app.use("/cv", auth.authCheck, cVRouter);
+app.use('/hire',auth.authCheck,hireRouter)
 app.use("/auth", authRoutes);
 
 
