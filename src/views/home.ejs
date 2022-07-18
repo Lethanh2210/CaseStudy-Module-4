@@ -1,6 +1,5 @@
 <%- include ('./partials/header.ejs')-%>
 <main>
-
     <!-- slider Area Start-->
     <div class="slider-area ">
         <!-- Mobile Menu -->
@@ -18,20 +17,22 @@
                     <div class="row">
                         <div class="col-xl-8">
                             <!-- form -->
-                            <form action="#" class="search-box">
+                            <form action="/cv/search" class="search-box" method="post">
                                 <div class="input-form">
-                                    <input type="text" placeholder="Job Tittle or keyword">
+                                    <input type="text" name="search" placeholder="Job name or Company">
                                 </div>
-                                <div class="select-form">
+                                <div class="select-form" size="5">
                                     <div class="select-itms">
 <!--                                        foreach lay ra value location-->
-                                        <select name="select" id="select1">
-                                            <option value="">Thanh Xuan</option>
+                                        <select name="location" id="select-location" class="form-control" style="width:800px; height: 1000px">
+                                            <% locations.forEach((item) => {%>
+                                                <option value="<%= item._id%>"> <%= item.name%></option>
+                                            <% })%>
                                         </select>
                                     </div>
                                 </div>
                                 <div class="search-form">
-                                    <a href="#">Find job</a>
+                                    <a href=""> <button type="submit">Find job</button></a>
                                 </div>
                             </form>
                         </div>
@@ -200,7 +201,7 @@
                                 <a href="job_details.html"><h4><%=job.jobName%></h4></a>
                                 <ul>
                                     <li><%=job.companyName%></li>
-                                    <li><i class="fas fa-map-marker-alt"></i><%=job.location%></li>
+                                    <li><i class="fas fa-map-marker-alt"></i><%=job.location ? job.location.name : "none"%></li>
                                     <li><%=job.salary%>$</li>
                                 </ul>
                             </div>
@@ -422,5 +423,3 @@
 <script src="https://cdn.socket.io/4.5.0/socket.io.min.js" crossorigin="anonymous"></script>
 <script defer src="../public/js/script.js"></script>
 <%- include ('./partials/footer.ejs')-%>
-
-

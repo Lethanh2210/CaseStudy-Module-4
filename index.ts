@@ -53,7 +53,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // app.use("/cv", auth.authCheck, cVRouter);
-app.use('/hire',auth.authCheck,hireRouter)
+app.use('/cv',auth.authCheck,hireRouter)
 app.use("/auth", authRoutes);
 
 
