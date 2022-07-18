@@ -1,0 +1,32 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+#notice{
+    position: absolute;
+    left: 820px
+}
+
+#notification-btn {
+    all: unset;
+    position: relative;
+}
+
+#notification-btn::before {
+    /*  main is this attr()  */
+    content: attr(data-notification-count);
+
+    position: absolute;
+    width: 1rem;
+    height: 1rem;
+    display: grid;
+    place-items: center;
+    color: white;
+    font-weight: 400;
+    font-size: 12px;
+    border-radius: 500px;
+    background-color: red;
+    top: 10px;
+    right: 23px;
+}

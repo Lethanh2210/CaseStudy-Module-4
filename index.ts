@@ -1,6 +1,7 @@
 import express from "express";
 import bodyParser from "body-parser";
 import path from "path";
+import http from 'http';
 import cVRouter from "./src/routes/job.router"
 const connectDb = require("./src/config/db");
 import authRoutes from "./src/routes/auth.router"
@@ -8,6 +9,10 @@ import session from "express-session";
 import passport from "./src/controllers/passport";
 import cookieParser from 'cookie-parser';
 import auth from "./src/middlewares/auth.Middleware";
+import Socket from "./src/controllers/socket"
+import {Server} from "socket.io";
+
+
 
 
 const PORT = 3000;
@@ -49,8 +54,15 @@ app.use(passport.session());
 app.use("/cv", auth.authCheck, cVRouter);
 app.use("/auth", authRoutes);
 
+
 app.get('/', (req, res) => {
     res.render('home');
+})
+let server = http.createServer(app);
+
+let io = new Server(server);
+io.on('connection', socket => {
+   console.log('io-connect')
 })
 
 

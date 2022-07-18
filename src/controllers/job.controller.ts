@@ -66,6 +66,11 @@ const jobController = {
     deleteJob:async (req, res,next) => {
         await JobModel.findOneAndRemove({_id: req.params.id}).lean();
         res.redirect('/cv/jobs');
+    },
+
+    applyJob:async (req, res, next) => {
+        let user = req.session.passport.user;
+        res.render('writeCV',{user:user})
     }
 }
 

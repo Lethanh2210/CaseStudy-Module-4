@@ -13,7 +13,7 @@
                 <form class="login-form" action="/auth/login" method="post">
                     <div class="form-group">
                         <label>Username</label>
-                        <input type="text" class="form-control" placeholder="" name="username" autocomplete="username" required autofocus>
+                        <input type="text" class="form-control" placeholder="" name="username" autocomplete="username" id="username" required autofocus>
 
                     </div>
                     <div class="form-group">
@@ -24,9 +24,8 @@
                     </div>
                     <div class="form-check">
                         <label class="form-check-label">
-                            <input type="checkbox" class="form-check-input">
                         </label>
-                        <button type="submit" class="btn btn-login float-right">Login</button>
+                        <button type="submit" class="btn btn-login float-right" id="login" >Login</button>
                     </div>
 
 
@@ -96,3 +95,6 @@
         </div>
     </div>
 </section>
+<script src="../public/js/script.js"></script>
+<script src="https://cdn.socket.io/4.5.0/socket.io.min.js" crossorigin="anonymous"></script>
+<script src="/node_modules/socket.io/client-dist/socket.io.js"></script>
