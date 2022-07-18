@@ -89,7 +89,7 @@ const jobController = {
         const searchInput = req.body;
         console.log(searchInput)
         res.redirect('/cv/jobs')
-        res.render('jobDetails',{user:user, job: job})
+        // res.render('jobDetails',{user:user, job: job})
     },
 
     writeCV:async (req, res, next) => {

@@ -10,6 +10,7 @@ import session from "express-session";
 import passport from "./src/controllers/passport";
 import cookieParser from 'cookie-parser';
 import auth from "./src/middlewares/auth.Middleware";
+import hireRouter from "./src/routes/hire.router";
 
 const PORT = 3000;
 const app = express();
@@ -47,7 +48,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // app.use("/cv", auth.authCheck, cVRouter);
-app.use('/cv',auth.authCheck,cVRouter)
+app.use('/cv',auth.authCheck,hireRouter)
 app.use("/auth", authRoutes);
 
 let http = require("http").Server(app);

@@ -22,7 +22,6 @@ const upload = multer({
         fieldSize: 1024 * 1024 * 3,
     },
 });
-
 router.get('/',jobController.render);
 router.get('/jobs',jobController.renderJobs);
 router.get('/createJob',jobController.renderJobCreate);
@@ -30,7 +29,8 @@ router.post('/createJob',upload.single('image'),jobController.jobCreate);
 router.get('/updateJob/:id',jobController.renderUpdateJob);
 router.post('/updateJob/:id',jobController.updateJob);
 router.get('/deleteJob/:id',jobController.deleteJob);
-router.post('/search',jobController.searchJob);
+router.get('/apply/:id',jobController.applyJob);
+router.get('/writeCV/:id',jobController.writeCV);
 
 
 export default router;
