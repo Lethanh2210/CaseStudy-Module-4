@@ -225,8 +225,13 @@
                                         </div>
                                     </div>
                                     <div class="items-link f-right">
+                                        <% if (user.role === 'recruiter') { %>
                                         <a href="/cv/updateJob/<%=job._id%>">Update</a>
                                         <a href="/cv/deleteJob/<%=job._id%>">Delete</a>
+                                        <%}else{%>
+                                        <a href="/cv/apply/<%=job._id%>">Apply</a>
+                                        <a href="/cv/detail/<%=job._id%>">Detail</a>
+                                        <%}%>
                                         <span>Duration: <%=job.duration%></span>
                                     </div>
                                 </div>
@@ -264,3 +269,4 @@
 
 </main>
 <%- include ('./partials/footer.ejs')-%>
+<script src="../public/js/script.js"></script>
