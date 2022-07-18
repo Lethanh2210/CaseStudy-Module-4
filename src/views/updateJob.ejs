@@ -19,7 +19,7 @@
         </div>
         <div class="form-group">
             <label for="formGroupExampleInput2">Location</label>
-            <input type="text" class="form-control" name="location"  value="<%=data.location%>" id="formGroupExampleInput2" placeholder="Location">
+            <input type="text" class="form-control" name="location"  value="<%=data.location.name%>" id="formGroupExampleInput2" placeholder="Location">
         </div>
         <div class="form-group">
             <label for="formGroupExampleInput2">Description</label>
@@ -31,8 +31,26 @@
         </div>
         <div class="form-group">
             <label for="formGroupExampleInput2">Category</label>
-            <input type="text" class="form-control" name="category" value="<%=data.category.name%>" id="formGroupExampleInput2" placeholder="Category">
+            <br>
+            <select name="category" id="formGroupExampleInput2" class="form-control" style="width:800px">
+                <% categories.forEach((item) => {%>
+                    <option value="<%= item._id%>"> <%= item.name%></option>
+                <% })%>
+            </select>
         </div>
+        <br>
+        <div class="form-group">
+            <br>
+            <label for="formGroupExampleInput2">Location</label>
+            <br>
+            <select name="location" id="formGroupExampleInput2" class="form-control" style="width:800px">
+                <% locations.forEach((item) => {%>
+                    <option value="<%= item._id%>"> <%= item.name%></option>
+                <% })%>
+            </select>
+        </div>
+        <br>
+        <br>
         <button type="submit" class="btn btn-primary mb-3">Update</button>
     </form>
 </div>

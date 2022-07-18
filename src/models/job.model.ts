@@ -6,7 +6,7 @@ interface IJob {
     companyName: string;
     jobName: string;
     salary: number;
-    location: string;
+    location: object;
     desc: string;
     duration: string;
     category: object;
@@ -17,7 +17,7 @@ const jobSchema = new Schema<IJob>({
     companyName: String,
     jobName: String,
     salary: Number,
-    location: String,
+    location: {type: Schema.Types.ObjectId,ref: "location"},
     desc: String,
     duration: String,
     category: {type: Schema.Types.ObjectId,ref: "category"},}

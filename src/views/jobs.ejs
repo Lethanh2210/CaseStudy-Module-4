@@ -219,7 +219,7 @@
                                             <a href="job_details.html"><h4><%=job.jobName%></h4></a>
                                             <ul>
                                                 <li><%=job.companyName%></li>
-                                                <li><i class="fas fa-map-marker-alt"></i><%=job.location%></li>
+                                                <li><i class="fas fa-map-marker-alt"></i><%= job.location ? job.location.name : "none"%></li>
                                                 <li><%=job.salary%>$</li>
                                             </ul>
                                         </div>
