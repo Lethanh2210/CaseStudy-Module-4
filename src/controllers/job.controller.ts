@@ -25,7 +25,6 @@ const jobController = {
         const jobs = await JobModel.find().populate({
             path: "category", select: "name"
         }).populate({path: "location", select: "name"});
-        console.log(jobs)
         let user = req.session.passport.user;
         res.render('jobs', {jobs: jobs, user:user})
     },
@@ -48,7 +47,6 @@ const jobController = {
     },
     jobCreate: async (req, res, next) => {
         try {
-
             const job = new JobModel({
                 avatar: `/public/uploads/${req.file.filename}`,
                 companyName: req.body.company,
@@ -68,7 +66,6 @@ const jobController = {
     updateJob: async (req, res, next) => {
         try {
             const {companyName,jobName,salary,location,desc,duration,category} = req.body;
-            console.log(req.params.id)
             const data = await JobModel.findOneAndUpdate({_id: req.params.id},{companyName,jobName,salary,location,desc,duration,category});
             res.redirect('/cv/jobs')
         }catch (e) {
@@ -83,11 +80,10 @@ const jobController = {
     applyJob:async (req, res, next) => {
         const job = await JobModel.findOne({_id: req.params.id})
         let user = req.session.passport.user;
-        res.render('writeCV',{user:user})
+        res.render('jobDetails',{user:user, job:job})
     },
     searchJob:async (req, res, next) => {
         const searchInput = req.body;
-        console.log(searchInput)
         res.redirect('/cv/jobs')
         // res.render('jobDetails',{user:user, job: job})
     },
