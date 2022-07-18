@@ -1,23 +1,17 @@
 import express from "express";
 import bodyParser from "body-parser";
 import path from "path";
-import http from 'http';
+
+
 import cVRouter from "./src/routes/job.router"
-import hireRouter from "./src/routes/hire.router"
 const connectDb = require("./src/config/db");
 import authRoutes from "./src/routes/auth.router"
 import session from "express-session";
 import passport from "./src/controllers/passport";
 import cookieParser from 'cookie-parser';
 import auth from "./src/middlewares/auth.Middleware";
-import Socket from "./src/controllers/socket"
-import {Server} from "socket.io";
-
-
-
 
 const PORT = 3000;
-
 const app = express();
 app.set("view engine", "ejs");
 app.set('views', './src/views');
@@ -53,24 +47,19 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // app.use("/cv", auth.authCheck, cVRouter);
-app.use('/cv',auth.authCheck,hireRouter)
+app.use('/cv',auth.authCheck,cVRouter)
 app.use("/auth", authRoutes);
 
+let http = require("http").Server(app);
+let io = require("socket.io")(http);
 
-app.get('/', (req, res) => {
-    res.render('home');
-})
-let server = http.createServer(app);
-
-let io = new Server(server);
 io.on('connection', socket => {
-   console.log('io-connect')
-})
+    console.log('socket ok')
+    socket.on('sendCV', news => {
+        socket.broadcast.emit('notice',news);
+    })
+});
 
-
-app.listen(PORT, () => {
-
-    console.log("App running on port: " + PORT)
-
-})
-
+const server = http.listen(3000, function() {
+    console.log("listening on *:3000");
+});

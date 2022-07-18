@@ -1,6 +1,6 @@
 <%- include('./partials/header.ejs', {user:user}) -%>
 <div class="container">
-    <form action="/cv/send" method="post" enctype="multipart/form-data">
+    <form action="/cv/send" method="post" enctype="multipart/form-data" id="send">
         <div class="form-group">
             <label for="formGroupExampleInput">Avatar</label>
             <input type="file"  name="image" id="formGroupExampleInput" placeholder="Avatar">
@@ -33,10 +33,9 @@
             <label for="formGroupExampleInput2">Category</label>
             <input type="text" class="form-control" name="category" id="formGroupExampleInput2" placeholder="Category">
         </div>
-        <button type="submit" class="btn btn-primary mb-3" id="send">Submit</button>
+        <button type="submit" class="btn btn-primary mb-3" id="send-button">Submit</button>
     </form>
 </div>
 <%- include('./partials/footer.ejs') -%>
-<script src="../public/js/script.js"></script>
-<script src="https://cdn.socket.io/4.5.0/socket.io.min.js" crossorigin="anonymous"></script>
+
 

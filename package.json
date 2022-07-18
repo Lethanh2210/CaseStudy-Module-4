@@ -2,6 +2,7 @@
   "name": "express-typescript",
   "version": "1.0.0",
   "main": "index.js",
+  "proxy": "http://localhost:3000",
   "scripts": {
     "build": "rimraf dist && tsc -p tsconfig.build.json",
     "test": "jest --runInBand --force-exit ./dist/src/test",

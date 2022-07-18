@@ -1,5 +1,6 @@
 <%- include ('./partials/header.ejs')-%>
 <main>
+
     <!-- slider Area Start-->
     <div class="slider-area ">
         <!-- Mobile Menu -->
@@ -207,7 +208,7 @@
                             </div>
                         </div>
                         <div class="items-link f-right">
-                            <a href="job_details.html">Apply</a>
+                            <a href="/cv/apply/<%=job._id%>">Apply</a>
                             <span>Duration: <%=job.duration%></span>
                         </div>
                     </div>
@@ -420,6 +421,7 @@
     <!-- Blog Area End -->
 
 </main>
-<script src="https://cdn.socket.io/4.5.0/socket.io.min.js" crossorigin="anonymous"></script>
-<script defer src="../public/js/script.js"></script>
-<%- include ('./partials/footer.ejs')-%>
+
+<%- include('./partials/footer.ejs')-%>
+
+

@@ -68,6 +68,7 @@ const jobController = {
     updateJob: async (req, res, next) => {
         try {
             const {companyName,jobName,salary,location,desc,duration,category} = req.body;
+            console.log(req.params.id)
             const data = await JobModel.findOneAndUpdate({_id: req.params.id},{companyName,jobName,salary,location,desc,duration,category});
             res.redirect('/cv/jobs')
         }catch (e) {
@@ -80,6 +81,7 @@ const jobController = {
     },
 
     applyJob:async (req, res, next) => {
+        const job = await JobModel.findOne({_id: req.params.id})
         let user = req.session.passport.user;
         res.render('writeCV',{user:user})
     },
@@ -87,6 +89,13 @@ const jobController = {
         const searchInput = req.body;
         console.log(searchInput)
         res.redirect('/cv/jobs')
+        res.render('jobDetails',{user:user, job: job})
+    },
+
+    writeCV:async (req, res, next) => {
+        const job = await JobModel.findOne({_id: req.params.id})
+        let user = req.session.passport.user;
+        res.render('writeCV',{user:user, job: job})
     }
 }
 
