@@ -10,17 +10,20 @@ interface IJob {
     desc: string;
     duration: string;
     category: object;
+    jobType: object;
 }
 
 const jobSchema = new Schema<IJob>({
-    avatar: String,
-    companyName: String,
-    jobName: String,
-    salary: Number,
-    location: {type: Schema.Types.ObjectId,ref: "location"},
-    desc: String,
-    duration: String,
-    category: {type: Schema.Types.ObjectId,ref: "category"},}
+        avatar: String,
+        companyName: String,
+        jobName: String,
+        salary: Number,
+        location: {type: Schema.Types.ObjectId, ref: "location"},
+        desc: String,
+        duration: String,
+        category: {type: Schema.Types.ObjectId, ref: "category"},
+        jobType: {type: Schema.Types.ObjectId, ref: "jobType"},
+    }
 )
 
 export const JobModel = model<IJob>('job', jobSchema);

@@ -46,6 +46,18 @@
             </select>
         </div>
         <br>
+        <div class="form-group">
+            <br>
+            <label for="formGroupExampleInput2">JobType</label>
+            <br>
+        <select name="type" data-size="5" id="formGroupExampleInput2" class="form-control selectpicker" style="width:800px">
+            <% jobTypes.forEach((item) => {%>
+                <option value="<%= item._id%>"> <%= item.name%></option>
+            <% })%>
+        </select>
+        </div>
+        <br>
+        <br>
         <br>
         <button type="submit" class="btn btn-primary mb-3">Create</button>
     </form>
