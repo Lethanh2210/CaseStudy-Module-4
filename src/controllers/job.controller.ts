@@ -33,7 +33,6 @@ const jobController = {
         let user = req.session.passport.user;
         let categories = await CategoryModel.find();
         let locations = await LocationModel.find();
-        console.log(locations);
         res.render('updateJob', {data: updateData, user: user,categories:categories,locations:locations});
     },
     renderJobDetails: async (req, res, next) => {
@@ -80,12 +79,12 @@ const jobController = {
     applyJob:async (req, res, next) => {
         const job = await JobModel.findOne({_id: req.params.id})
         let user = req.session.passport.user;
-        res.render('jobDetails',{user:user, job:job})
+        res.render('jobDetails',{job:job,user:user})
+
     },
     searchJob:async (req, res, next) => {
         const searchInput = req.body;
         res.redirect('/cv/jobs')
-        // res.render('jobDetails',{user:user, job: job})
     },
 
     writeCV:async (req, res, next) => {
