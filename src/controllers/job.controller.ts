@@ -23,6 +23,7 @@ const jobController = {
         let categories = await CategoryModel.find();
         let locations = await LocationModel.find();
         let user = req.session.passport.user;
+        // res.json(locations)
         res.render('home', {jobs: jobs, user: user, categories: categories, locations: locations});
     },
     renderJobs: async (req, res, next) => {
@@ -40,7 +41,7 @@ const jobController = {
         const jobTypes = await JobTypeModel.find();
         const locations = await LocationModel.find();
         let user = req.session.passport.user;
-        res.render('jobs', {jobs: jobs, user: user, categories: categories, jobTypes: jobTypes, locations: locations,currentPage: currentPage});
+        res.render('jobs', {jobs: jobs, user: user, categories: categories, jobTypes: jobTypes, locations: locations});
     },
     renderUpdateJob: async (req, res, next) => {
         const updateData = await JobModel.findOne({_id: req.params.id}).populate({path: "vacancy", select: "name"});
@@ -193,11 +194,12 @@ const jobController = {
     sendCV: async (req, res, next) => {
         const jobs = await JobModel.find().populate({
             path: "category", select: "name"
-        }).populate({path: "location", select: "name"});
+        }).populate({path: "location", select: "name"}).populate({path: "jobType", select: "name"});
         let user = req.session.passport.user;
         let categories = await CategoryModel.find();
         let locations = await LocationModel.find();
-        res.render('jobs', {jobs: jobs, user: user, locations: locations, categories: categories})
+        const jobTypes = await JobTypeModel.find();
+        res.render('jobs', {jobs: jobs, user: user, locations: locations, categories: categories, jobTypes: jobTypes})
     },
 
     acceptCV: async (req, res, next) => {
@@ -223,6 +225,8 @@ const jobController = {
                     res.render('jobs',{jobs,current: page, pages: Math.ceil(count / perPage),user: user, categories: categories, jobTypes: jobTypes, locations: locations})
                 });
             });
+        await authCtrl.sendMail(req.params.id, req, res);
+        res.redirect('/cv');
     }
 }
 function escapeRegex(text) {
