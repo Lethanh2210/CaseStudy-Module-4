@@ -19,23 +19,21 @@ const jobController = {
         let locations = await LocationModel.find();
         let user = req.session.passport.user;
         // res.json(locations)
-        res.render('home', {jobs: jobs, user: user, categories: categories, locations: locations});
+        res.render('home', {jobs: jobs, user: user,categories:categories,locations:locations});
     },
     renderJobs: async (req, res, next) => {
         const jobs = await JobModel.find().populate({
             path: "category", select: "name"
         }).populate({path: "location", select: "name"});
-        console.log(jobs)
         let user = req.session.passport.user;
-        res.render('jobs', {jobs: jobs, user: user})
+        res.render('jobs', {jobs: jobs, user:user})
     },
     renderUpdateJob: async (req, res, next) => {
         const updateData = await JobModel.findOne({_id: req.params.id}).lean();
         let user = req.session.passport.user;
         let categories = await CategoryModel.find();
         let locations = await LocationModel.find();
-        console.log(locations);
-        res.render('updateJob', {data: updateData, user: user, categories: categories, locations: locations});
+        res.render('updateJob', {data: updateData, user: user,categories:categories,locations:locations});
     },
     renderJobDetails: async (req, res, next) => {
 
@@ -44,7 +42,7 @@ const jobController = {
         let user = req.session.passport.user;
         let categories = await CategoryModel.find();
         let locations = await LocationModel.find();
-        res.render('createJob', {user: user, categories: categories, locations: locations})
+        res.render('createJob',{user:user,categories:categories,locations:locations})
     },
     jobCreate: async (req, res, next) => {
         try {
@@ -53,10 +51,10 @@ const jobController = {
                 companyName: req.body.company,
                 jobName: req.body.job,
                 salary: req.body.salary,
-                location: req.body ? req.body.location : "none",
+                location: req.body ? req.body.location :"none",
                 desc: req.body.desc,
                 duration: req.body.duration,
-                category: req.body ? req.body.category : "none"
+                category: req.body ? req.body.category :"none"
             })
             await job.save();
             res.redirect('/cv')
@@ -66,28 +64,19 @@ const jobController = {
     },
     updateJob: async (req, res, next) => {
         try {
-            const {companyName, jobName, salary, location, desc, duration, category} = req.body;
-            console.log(req.params.id)
-            const data = await JobModel.findOneAndUpdate({_id: req.params.id}, {
-                companyName,
-                jobName,
-                salary,
-                location,
-                desc,
-                duration,
-                category
-            });
+            const {companyName,jobName,salary,location,desc,duration,category} = req.body;
+            const data = await JobModel.findOneAndUpdate({_id: req.params.id},{companyName,jobName,salary,location,desc,duration,category});
             res.redirect('/cv/jobs')
-        } catch (e) {
+        }catch (e) {
             console.log(e.message);
         }
     },
-    deleteJob: async (req, res, next) => {
+    deleteJob:async (req, res,next) => {
         await JobModel.findOneAndRemove({_id: req.params.id}).lean();
         res.redirect('/cv/jobs');
     },
 
-    applyJob: async (req, res, next) => {
+    applyJob:async (req, res, next) => {
         const job = await JobModel.findOne({_id: req.params.id})
         let user = req.session.passport.user;
         res.render('jobDetails', {user: user, job: job})
@@ -106,13 +95,11 @@ const jobController = {
         // res.json(locations)
         res.render('home', {jobs: jobs, user: user, categories: categories, locations: locations});
     },
-    writeCV: async (req, res, next) => {
+
+    writeCV:async (req, res, next) => {
         const job = await JobModel.findOne({_id: req.params.id})
         let user = req.session.passport.user;
-        res.render('writeCV', {user: user, job: job})
-    },
-    renderSearchJob: (req, res, next) => {
-
+        res.render('writeCV',{user:user, job: job})
     }
 }
 
