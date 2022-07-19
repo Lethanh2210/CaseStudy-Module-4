@@ -110,8 +110,6 @@ router.get("/OTP/resend", async (req, res, next) => {
     let emailCurrent = req.cookies["email"];
     await authCtrl.sendOTP(emailCurrent,req,res);
     res.render('OTP', {email: emailCurrent, notice: ""});
-})
-
-
+});
 
 export default router;

@@ -86,12 +86,10 @@
                             </div>
                             <!-- Select job items start -->
                             <div class="select-job-items2">
-                                <select name="select">
-                                    <option value="">Anywhere</option>
-                                    <option value="">Category 1</option>
-                                    <option value="">Category 2</option>
-                                    <option value="">Category 3</option>
-                                    <option value="">Category 4</option>
+                                <select name="findLocation" id="findLocation">
+                                    <% locations.forEach((item) => {%>
+                                        <option value="<%= item._id%>"> <%= item.name%></option>
+                                    <% })%>
                                 </select>
                             </div>
                             <!--  Select job items End-->

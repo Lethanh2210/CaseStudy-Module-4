@@ -8,11 +8,14 @@ import passport from "./src/controllers/passport";
 import cookieParser from 'cookie-parser';
 import auth from "./src/middlewares/auth.Middleware";
 import hireRouter from "./src/routes/hire.router";
+import UserSocket from "./src/controllers/socket"
 
 const PORT = 3000;
 const app = express();
 app.set("view engine", "ejs");
 app.set('views', './src/views');
+
+const userSocket = new UserSocket();
 
 
 connectDb().catch(r => {
@@ -52,10 +55,12 @@ let http = require("http").Server(app);
 let io = require("socket.io")(http);
 
 io.on('connection', socket => {
-    console.log('socket ok')
+    console.log('socket ok');
+
     socket.on('sendCV', (news)=> {
         socket.broadcast.emit('notice', news);
-    })
+    });
+
 });
 
 const server = http.listen(PORT, function() {
