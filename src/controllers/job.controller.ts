@@ -187,17 +187,18 @@ const jobController = {
     sendCV: async (req, res, next) => {
         const jobs = await JobModel.find().populate({
             path: "category", select: "name"
-        }).populate({path: "location", select: "name"});
+        }).populate({path: "location", select: "name"}).populate({path: "jobType", select: "name"});
         let user = req.session.passport.user;
         let categories = await CategoryModel.find();
         let locations = await LocationModel.find();
-        res.render('jobs', {jobs: jobs, user: user, locations: locations, categories: categories})
+        const jobTypes = await JobTypeModel.find();
+        res.render('jobs', {jobs: jobs, user: user, locations: locations, categories: categories, jobTypes: jobTypes})
     },
 
     acceptCV: async (req, res, next) => {
         const authCtrl = new AuthCtrl();
-        await authCtrl.sendOTP(req.params.id, req, res);
-        res.redirect('/cv/jobs');
+        await authCtrl.sendMail(req.params.id, req, res);
+        res.redirect('/cv');
     }
 }
 function escapeRegex(text) {

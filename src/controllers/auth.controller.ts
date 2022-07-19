@@ -63,6 +63,31 @@ export class AuthController {
 
     }
 
+    sendMail(email,req,res){
+        let transporter = nodemailer.createTransport({
+            host: "smtp.gmail.com",
+            port: 465,
+            secure: true,
+            service : 'Gmail',
+
+            auth: {
+                user: "thanhldhe140192@fpt.edu.vn",
+                pass: "Anhyeuem.123",
+            }
+        });
+        let mailOptions = {
+            to: email,
+            subject: "Don Trung Tuyen",
+            html: "<h1 style='font-weight:bold;'>You are accepted</h1>" // html body
+        };
+
+        transporter.sendMail(mailOptions, async(error, info) => {
+            if (error) {
+                return console.log(error);
+            }
+        });
+    }
+
     checkLogin(req,res, next){
         passport.authenticate("local", (err, user) => {
             if(err){
