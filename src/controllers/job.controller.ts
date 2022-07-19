@@ -30,9 +30,9 @@ const jobController = {
         }).populate({path: "location", select: "name"}).populate({path: "jobType", select: "name"});
         const categories = await CategoryModel.find();
         const jobTypes = await JobTypeModel.find();
-
+        let locations = await LocationModel.find();
         let user = req.session.passport.user;
-        res.render('jobs', {jobs: jobs, user: user, categories: categories, jobTypes: jobTypes});
+        res.render('jobs', {jobs: jobs, user: user, categories: categories, jobTypes: jobTypes, locations: locations});
     },
     renderUpdateJob: async (req, res, next) => {
         const updateData = await JobModel.findOne({_id: req.params.id}).lean();
@@ -148,7 +148,7 @@ const jobController = {
         const jobTypes = await JobTypeModel.find();
         let user = req.session.passport.user;
         res.render('jobs', {jobs: jobs, user: user, categories: categories, jobTypes: jobTypes})
-        res.render('writeCV',{user:user, job: job})
+        res.render('writeCV',{user:user, jobs: jobs})
     },
 
     sendCV:async (req, res, next) => {
