@@ -45,37 +45,31 @@
                                 <h4>Job Category</h4>
                             </div>
                             <!-- Select job items start -->
-                            <div class="select-job-items2">
-                                <select name="select">
-                                    <option value="">All Category</option>
-                                    <option value="">Category 1</option>
-                                    <option value="">Category 2</option>
-                                    <option value="">Category 3</option>
-                                    <option value="">Category 4</option>
-                                </select>
-                            </div>
+                            <form action="/cv/search/category">
+                                <div class="select-job-items2">
+                                    <select name="select" id="select" onchange="this.form.submit()">
+                                        <% categories.forEach((item) => { %>
+                                            <option value="<%= item._id %>"><%= item.name %></option>
+                                        <% }) %>
+                                    </select>
+                                </div>
+                            </form>
+
                             <!--  Select job items End-->
                             <!-- select-Categories start -->
                             <div class="select-Categories pt-80 pb-50">
                                 <div class="small-section-tittle2">
                                     <h4>Job Type</h4>
                                 </div>
-                                <label class="container">Full Time
-                                    <input type="checkbox" >
-                                    <span class="checkmark"></span>
-                                </label>
-                                <label class="container">Part Time
-                                    <input type="checkbox" checked="checked active">
-                                    <span class="checkmark"></span>
-                                </label>
-                                <label class="container">Remote
-                                    <input type="checkbox">
-                                    <span class="checkmark"></span>
-                                </label>
-                                <label class="container">Freelance
-                                    <input type="checkbox">
-                                    <span class="checkmark"></span>
-                                </label>
+                                    <form action="/cv/search/job">
+                                        <div class="select-job-items2">
+                                            <select name="select" id="select" onchange="this.form.submit()">
+                                                <% jobTypes.forEach((item) => { %>
+                                                    <option value="<%= item._id %>"><%= item.name %></option>
+                                                <% }) %>
+                                            </select>
+                                        </div>
+                                    </form>
                             </div>
                             <!-- select-Categories End -->
                         </div>
@@ -188,7 +182,7 @@
                             <div class="row">
                                 <div class="col-lg-12">
                                     <div class="count-job mb-35">
-                                        <span>39, 782 Jobs found</span>
+                                        <span><%=jobs.length%> Job found</span>
                                         <!-- Select job items start -->
                                         <div class="select-job-items">
                                             <span>Sort by</span>
@@ -233,7 +227,7 @@
                                     </div>
                                 </div>
                                 <% } %>
-                        </div>
+                            </div>
                         </div>
                     </section>
 
@@ -262,7 +256,6 @@
             </div>
         </div>
     </div>
-    <!--Pagination End  -->
 
 </main>
 <%- include ('./partials/footer.ejs')-%>

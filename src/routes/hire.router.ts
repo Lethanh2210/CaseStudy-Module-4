@@ -35,5 +35,9 @@ router.post('/search', jobController.searchJob);
 router.post('/jobs', jobController.sendCV);
 router.get('/accept/:id', jobController.acceptCV);
 
+router.post('/search',jobController.searchJob);
+router.get('/search/category',jobController.searchCategory);
+router.get('/search/job',jobController.searchJobTypes);
+// router.get('/search',jobController.renderSearchJob);
 
 export default router;
