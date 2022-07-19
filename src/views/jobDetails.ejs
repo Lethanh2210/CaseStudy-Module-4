@@ -25,7 +25,7 @@
                     <div class="single-job-items mb-50">
                         <div class="job-items">
                             <div class="company-img company-img-details">
-                                <a href="#"><img src="<%= job.avatar %>" alt=""></a>
+                                <a href="#"><img src="<%= job.avatar %>" alt="" style="width: 150px"></a>
                             </div>
                             <div class="job-tittle">
                                 <a href="#">
@@ -115,24 +115,24 @@
         </div>
     </div>
     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="top: 100px">
-        <form action="">
+        <form action="/cv/jobs" method="post" enctype="multipart/form-data" id="send">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel"><%=user.cvName%></h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Upload CV</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        Name: <input type="text" id="cvName">
+                        Email: <input type="email" id="cvEmail">
                         <input id="files"  type="file">
-                    <input type="text" placeholder="email">
-                    <input type="text" placeholder="phone">
-                    <input type="text" placeholder="comment">
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fa fa-close"></i>Close</button>
-                    <button type="submit" class="btn btn-primary"><i class="fa fa-upload"></i>Send CV</button>
-                </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fa fa-close"></i>Close</button>
+                            <button type="submit" class="btn btn-primary" id="send-button" ><i class="fa fa-upload"></i>Send CV</button>
+                        </div>
+                    </div>
             </div>
         </div>
         </form>

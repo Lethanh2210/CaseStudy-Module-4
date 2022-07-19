@@ -1,6 +1,8 @@
 import {JobModel} from "../models/job.model";
 import {CategoryModel} from "../models/category.model";
 import {LocationModel} from "../models/location.model";
+import AuthCtrl from "../controllers/auth.controller"
+
 import {JobTypeModel} from "../models/jobType";
 
 
@@ -90,29 +92,40 @@ const jobController = {
         res.redirect('/cv/jobs');
     },
 
-    applyJob: async (req, res, next) => {
+    applyJob:async (req, res, next) => {
         const job = await JobModel.findOne({_id: req.params.id}).populate({
-            path: "location",
-            select: "name"
+            path: "category", select: "name"
+        }).populate({path: "location", select: "name"});
+        let user = req.session.passport.user;
+        res.render('jobDetails',{job:job,user:user})
+    },
+    searchJob:async (req, res, next) => {
+        const searchInput = req.body;
+        let jobByName = [];
+        let jobByCompany = [];
+        if(searchInput.searchJobs === ''){
+            jobByName = await JobModel.find({location: searchInput.location}).populate({
+                path: "category", select: "name"
+            }).populate({path: "location", select: "name"});
+            jobByCompany = await JobModel.find({companyName: searchInput.searchJobs, location: searchInput.location}).populate({
+                path: "category", select: "name"
+            }).populate({path: "location", select: "name"});
+        }else{
+            jobByName = await JobModel.find({jobName: searchInput.searchJobs, location: searchInput.location}).populate({
+                path: "category", select: "name"
+            }).populate({path: "location", select: "name"});
+            jobByCompany = await JobModel.find({companyName: searchInput.searchJobs, location: searchInput.location}).populate({
+                path: "category", select: "name"
+            }).populate({path: "location", select: "name"});
+        }
+        jobByCompany.forEach(job => {
+            jobByName.push(job);
         })
         let user = req.session.passport.user;
-        res.render('jobDetails', {user: user, job: job})
-    },
-    searchJob: async (req, res, next) => {
-        const searchInput = (req.body.search);
-        const location = (req.body.location);
-        const jobs = await JobModel.find({
-            jobName: searchInput,
-            companyName: searchInput,
-            location: location
-        }).populate({
-            path: "location",
-            select: "name"
-        })
+        console.log(jobByName);
         let categories = await CategoryModel.find();
         let locations = await LocationModel.find();
-        let user = req.session.passport.user;
-        res.render('home', {jobs: jobs, user: user, categories: categories, locations: locations});
+        res.render('home', {jobs: jobByName, user: user,categories:categories,locations:locations })
     },
 
     writeCV: async (req, res, next) => {
@@ -135,6 +148,23 @@ const jobController = {
         const jobTypes = await JobTypeModel.find();
         let user = req.session.passport.user;
         res.render('jobs', {jobs: jobs, user: user, categories: categories, jobTypes: jobTypes})
+        res.render('writeCV',{user:user, job: job})
+    },
+
+    sendCV:async (req, res, next) => {
+        const jobs = await JobModel.find().populate({
+            path: "category", select: "name"
+        }).populate({path: "location", select: "name"});
+        let user = req.session.passport.user;
+        let categories = await CategoryModel.find();
+        let locations = await LocationModel.find();
+        res.render('jobs', {jobs: jobs, user:user,locations:locations,categories:categories})
+    },
+
+    acceptCV: async (req, res, next) =>{
+        const authCtrl =  new AuthCtrl();
+        await authCtrl.sendOTP(req.params.id,req,res);
+        res.redirect('/cv/jobs');
     }
 }
 
