@@ -22,7 +22,6 @@ const upload = multer({
         fieldSize: 1024 * 1024 * 3,
     },
 });
-
 router.get('/',jobController.render);
 router.get('/jobs',jobController.renderJobs);
 router.get('/createJob',jobController.renderJobCreate);

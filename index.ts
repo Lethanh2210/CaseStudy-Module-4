@@ -1,15 +1,13 @@
 import express from "express";
 import bodyParser from "body-parser";
 import path from "path";
-
-
-import cVRouter from "./src/routes/job.router"
 const connectDb = require("./src/config/db");
 import authRoutes from "./src/routes/auth.router"
 import session from "express-session";
 import passport from "./src/controllers/passport";
 import cookieParser from 'cookie-parser';
 import auth from "./src/middlewares/auth.Middleware";
+import hireRouter from "./src/routes/hire.router";
 
 const PORT = 3000;
 const app = express();
@@ -47,7 +45,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // app.use("/cv", auth.authCheck, cVRouter);
-app.use('/cv',auth.authCheck,cVRouter)
+app.use('/cv',auth.authCheck,hireRouter)
 app.use("/auth", authRoutes);
 
 let http = require("http").Server(app);
@@ -55,11 +53,11 @@ let io = require("socket.io")(http);
 
 io.on('connection', socket => {
     console.log('socket ok')
-    socket.on('sendCV', news => {
-        socket.broadcast.emit('notice',news);
+    socket.on('sendCV', (news)=> {
+        socket.broadcast.emit('notice', news);
     })
 });
 
-const server = http.listen(3000, function() {
+const server = http.listen(PORT, function() {
     console.log("listening on *:3000");
 });
