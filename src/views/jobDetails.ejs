@@ -93,9 +93,16 @@
                             <li>Salary :  <span><%=job.salary%>$</span></li>
                             <li>Duration : <span><%= job.duration%></span></li>
                         </ul>
+                        <% if (user.role === 'recruiter') { %>
+                            <div class="apply-btn2">
+                                <a class="btn btn-danger " data-toggle="modal" data-target="#exampleModal" style="color: #fff; ">Delete</a>
+                                <a class="btn btn-primary " data-toggle="modal" data-target="#exampleModal" style="color: #fff; ">Edit</a>
+                            </div>
+                        <%}else{%>
                         <div class="apply-btn2">
                             <a class="btn" data-toggle="modal" data-target="#exampleModal" style="color: #fff; ">Apply Now</a>
                         </div>
+                        <%}%>
                     </div>
                     <div class="post-details4  mb-50">
                         <!-- Small Section Tittle -->
