@@ -23,7 +23,7 @@
         </div>
         <div class="form-group">
             <label for="formGroupExampleInput2">Vacancy</label>
-            <input type="text" class="form-control" name="vacancy" value="<%=data.vacancy?data.vacancy.name:"none"%>" id="formGroupExampleInput2" placeholder="">
+            <input type="text" class="form-control" name="vacancy" value="<%=data.vacancy?data.vacancy:"none"%>" id="formGroupExampleInput2" placeholder="">
         </div>
         <div class="form-group">
             <label for="formGroupExampleInput2">Category</label>
@@ -47,6 +47,12 @@
         </div>
         <br>
         <br>
+        <select name="type" data-size="5" id="formGroupExampleInput2" class="form-control selectpicker" style="width:800px">
+            <br>
+            <% jobTypes.forEach((item) => {%>
+                <option value="<%= item._id%>"> <%= item.name%></option>
+            <% })%>
+        </select>
         <button type="submit" class="btn btn-primary mb-3">Update</button>
     </form>
 </div>
