@@ -1,7 +1,7 @@
 import {JobModel} from "../models/job.model";
 import {CategoryModel} from "../models/category.model";
 import {LocationModel} from "../models/location.model";
-import {vacancyModel} from "../models/vacancy.model";
+import {VacancyModel} from "../models/vacancy.model";
 import AuthCtrl from "../controllers/auth.controller"
 
 import {JobTypeModel} from "../models/jobType";
@@ -30,11 +30,9 @@ const jobController = {
             path: "category", select: "name"
         }).populate({path: "location", select: "name"})
             .populate({path: "jobType", select: "name"})
-
         const categories = await CategoryModel.find();
         const jobTypes = await JobTypeModel.find();
         const locations = await LocationModel.find();
-
         let user = req.session.passport.user;
         res.render('jobs', {jobs: jobs, user: user, categories: categories, jobTypes: jobTypes, locations: locations});
     },
@@ -43,7 +41,8 @@ const jobController = {
         let user = req.session.passport.user;
         let categories = await CategoryModel.find();
         let locations = await LocationModel.find();
-        res.render('updateJob', {data: updateData, user: user, categories: categories, locations: locations});
+        let type = await JobTypeModel.find();
+        res.render('updateJob', {data: updateData, user: user, categories: categories, locations: locations,jobTypes:type});
     },
     renderJobDetails: async (req, res, next) => {
 
@@ -57,10 +56,6 @@ const jobController = {
     },
     jobCreate: async (req, res, next) => {
         try {
-            const vacancy = new vacancyModel({
-                name: req.body.vacancy
-            })
-            await vacancy.save();
             const job = new JobModel({
                 avatar: `/public/uploads/${req.file.filename}`,
                 companyName: req.body.company,
@@ -71,7 +66,7 @@ const jobController = {
                 duration: req.body.duration,
                 category: req.body ? req.body.category : "none",
                 jobType: req.body ? req.body.type : "none",
-                vacancy: vacancy._id
+                vacancy: req.body.vacancy,
             })
             await job.save();
             res.redirect('/cv')
@@ -88,17 +83,15 @@ const jobController = {
                 .populate({path: "jobType", select: "name"}).populate({path: "vacancy", select: "name"});
 
             job.companyName = req.body.company;
-                job.jobName = req.body.job;
-                job.salary = req.body.salary;
-                job.location = req.body.location;
-                job.desc = req.body.desc;
-                job.duration = req.body.duration;
-                job.category = req.body.category;
-                job.jobType = req.body.type;
-                // @ts-ignore
-            job.vacancy.name = req.body.vacancy;
+            job.jobName = req.body.job;
+            job.salary = req.body.salary;
+            job.location = req.body.location;
+            job.desc = req.body.desc;
+            job.duration = req.body.duration;
+            job.category = req.body.category;
+            job.jobType = req.body.type;
+            job.vacancy = req.body.vacancy;
             await job.save()
-            console.log(job)
             res.redirect('/cv/jobs')
         } catch (e) {
             console.log(e.message);
@@ -114,7 +107,7 @@ const jobController = {
             .populate({
                 path: "category", select: "name"
             }).populate({path: "location", select: "name"})
-            .populate({path: "jobType", select: "name"}).populate({path: "vacancy", select: "name"});
+            .populate({path: "jobType", select: "name"})
         let user = req.session.passport.user;
         res.render('jobDetails', {job: job, user: user})
     },
@@ -168,7 +161,9 @@ const jobController = {
         res.render('jobs', {jobs: jobs, user: user, categories: categories, jobTypes: jobTypes})
     },
     searchJobTypes: async (req, res, next) => {
-        const jobs = await JobModel.find({jobType: req.params.id});
+        console.log(req.query)
+        const jobs = await JobModel.find({jobType: req.query.select});
+        console.log(jobs)
         const categories = await CategoryModel.find();
         const jobTypes = await JobTypeModel.find();
         let user = req.session.passport.user;
