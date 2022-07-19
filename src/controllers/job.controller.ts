@@ -79,12 +79,21 @@ const jobController = {
     applyJob:async (req, res, next) => {
         const job = await JobModel.findOne({_id: req.params.id})
         let user = req.session.passport.user;
-        res.render('jobDetails',{job:job,user:user})
-
+        res.render('jobDetails', {user: user, job: job})
     },
-    searchJob:async (req, res, next) => {
-        const searchInput = req.body;
-        res.redirect('/cv/jobs')
+    searchJob: async (req, res, next) => {
+        const searchInput = (req.body.search);
+        const location = (req.body.location);
+        console.log(searchInput)
+        const jobs = await JobModel.find({jobName: searchInput, location: location}).populate({
+            path: "location",
+            select: "name"
+        })
+        let categories = await CategoryModel.find();
+        let locations = await LocationModel.find();
+        let user = req.session.passport.user;
+        // res.json(locations)
+        res.render('home', {jobs: jobs, user: user, categories: categories, locations: locations});
     },
 
     writeCV:async (req, res, next) => {

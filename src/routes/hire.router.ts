@@ -31,6 +31,7 @@ router.post('/updateJob/:id',jobController.updateJob);
 router.get('/deleteJob/:id',jobController.deleteJob);
 router.get('/apply/:id',jobController.applyJob);
 router.get('/writeCV/:id',jobController.writeCV);
-
+router.post('/search',jobController.searchJob);
+// router.get('/search',jobController.renderSearchJob);
 
 export default router;
