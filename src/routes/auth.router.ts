@@ -112,4 +112,6 @@ router.get("/OTP/resend", async (req, res, next) => {
     res.render('OTP', {email: emailCurrent, notice: ""});
 });
 
+
+
 export default router;
