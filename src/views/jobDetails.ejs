@@ -86,12 +86,12 @@
                             <h4>Job Overview</h4>
                         </div>
                         <ul>
-                            <li>Posted date : <span>12 Aug 2019</span></li>
+                            <li>Posted date : <span><%=job.date.toDateString()%></span></li>
                             <li>Location : <span><%=job.location.name%></span></li>
-                            <li>Vacancy : <span>none</span></li>
-                            <li>Job nature : <span>Full time</span></li>
+                            <li>Vacancy : <span><%=job.vacancy%></span></li>
+                            <li>Job nature : <span><%=job.jobType?job.jobType.name:"none"%></span></li>
                             <li>Salary :  <span><%=job.salary%>$</span></li>
-                            <li>Application date : <span><%= job.duration%></span></li>
+                            <li>Duration : <span><%= job.duration%></span></li>
                         </ul>
                         <div class="apply-btn2">
                             <a class="btn" data-toggle="modal" data-target="#exampleModal" style="color: #fff; ">Apply Now</a>
