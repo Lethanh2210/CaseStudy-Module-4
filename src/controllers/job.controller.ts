@@ -25,7 +25,6 @@ const jobController = {
         const jobs = await JobModel.find().populate({
             path: "category", select: "name"
         }).populate({path: "location", select: "name"});
-        console.log(jobs)
         let user = req.session.passport.user;
         res.render('jobs', {jobs: jobs, user:user})
     },
@@ -47,7 +46,6 @@ const jobController = {
     },
     jobCreate: async (req, res, next) => {
         try {
-
             const job = new JobModel({
                 avatar: `/public/uploads/${req.file.filename}`,
                 companyName: req.body.company,
@@ -82,6 +80,7 @@ const jobController = {
         const job = await JobModel.findOne({_id: req.params.id})
         let user = req.session.passport.user;
         res.render('jobDetails',{job:job,user:user})
+
     },
     searchJob:async (req, res, next) => {
         const searchInput = req.body;
