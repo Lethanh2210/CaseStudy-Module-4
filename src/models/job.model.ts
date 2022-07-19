@@ -25,7 +25,7 @@ const jobSchema = new Schema<IJob>({
         duration: String,
         category: {type: Schema.Types.ObjectId, ref: "category"},
         jobType: {type: Schema.Types.ObjectId, ref: "jobType"},
-        vacancy: String,
+        vacancy: String,//fuck
         date:{
             type: Date,
             default:Date.now()
