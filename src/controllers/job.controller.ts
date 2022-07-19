@@ -114,26 +114,28 @@ const jobController = {
     searchJob: async (req, res, next) => {
         const searchInput = req.body;
         let jobByName = [];
+        console.log(jobByName)
         let jobByCompany = [];
+        const regex = new RegExp(escapeRegex(searchInput.searchJobs), 'gi');
         if (searchInput.searchJobs === '') {
             jobByName = await JobModel.find({location: searchInput.location}).populate({
                 path: "category", select: "name"
             }).populate({path: "location", select: "name"});
             jobByCompany = await JobModel.find({
-                companyName: searchInput.searchJobs,
+                companyName: regex,
                 location: searchInput.location
             }).populate({
                 path: "category", select: "name"
             }).populate({path: "location", select: "name"});
         } else {
             jobByName = await JobModel.find({
-                jobName: searchInput.searchJobs,
+                jobName: regex,
                 location: searchInput.location
             }).populate({
                 path: "category", select: "name"
             }).populate({path: "location", select: "name"});
             jobByCompany = await JobModel.find({
-                companyName: searchInput.searchJobs,
+                companyName: regex,
                 location: searchInput.location
             }).populate({
                 path: "category", select: "name"
@@ -198,5 +200,8 @@ const jobController = {
         res.redirect('/cv/jobs');
     }
 }
+function escapeRegex(text) {
+    return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
+};
 
 export default jobController;
