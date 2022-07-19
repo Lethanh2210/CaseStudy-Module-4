@@ -11,6 +11,8 @@ interface IJob {
     duration: string;
     category: object;
     jobType: object;
+    vacancy: object;
+    date: object;
 }
 
 const jobSchema = new Schema<IJob>({
@@ -23,6 +25,11 @@ const jobSchema = new Schema<IJob>({
         duration: String,
         category: {type: Schema.Types.ObjectId, ref: "category"},
         jobType: {type: Schema.Types.ObjectId, ref: "jobType"},
+        vacancy: {type: Schema.Types.ObjectId, ref: "vacancy"},
+        date:{
+            type: Date,
+            default:Date.now()
+        }
     }
 )
 
