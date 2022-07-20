@@ -29,7 +29,6 @@ app.use(cookieParser());
 
 app.use('/public', express.static(path.join(__dirname,'../src', 'public')))
 // app.use(express.static(__dirname+'/public/uploads'));
-console.log(__dirname)
 app.use(session({
 
     secret: 'SECRET',
@@ -55,7 +54,6 @@ let http = require("http").Server(app);
 let io = require("socket.io")(http);
 
 io.on('connection', socket => {
-    console.log('socket ok');
 
     socket.on('sendCV', (news)=> {
         socket.broadcast.emit('notice', news);

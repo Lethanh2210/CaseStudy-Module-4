@@ -8,6 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="shortcut icon" type="image/x-icon" href="../../public/img/favicon.ico">
 
+
     <!-- CSS here -->
     <link rel="stylesheet" href="../../public/css/bootstrap.min.css">
     <link rel="stylesheet" href="../../public/css/owl.carousel.min.css">
@@ -68,7 +69,9 @@
                                                 <li><a href="job_details.html">job Details</a></li>
                                             </ul>
                                         </li>
-                                        <li><a href="contact.html">Contact</a></li>
+                                        <li><% if (user.role === 'recruiter') { %>
+                                                <a href="/cv/createJob" >Add Job</a>
+                                            <%}%></li>
                                     </ul>
                                 </nav>
                             </div>
