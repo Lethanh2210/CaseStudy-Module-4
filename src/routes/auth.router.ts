@@ -4,6 +4,7 @@ const router = express.Router();
 
 import passport from "passport";
 import AuthCtrl from "../controllers/auth.controller"
+import JobController from "../controllers/job.controller"
 
 import multer from 'multer';
 import {AccountModel} from "../models/account.model";
@@ -111,6 +112,8 @@ router.get("/OTP/resend", async (req, res, next) => {
     await authCtrl.sendOTP(emailCurrent,req,res);
     res.render('OTP', {email: emailCurrent, notice: ""});
 });
+
+router.get("/home", JobController.renderHome );
 
 
 
