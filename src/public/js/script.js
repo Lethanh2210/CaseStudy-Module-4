@@ -7,6 +7,8 @@ let modal = document.getElementById('modal');
 let cvEmail = document.getElementById('cvEmail');
 let noticeCV = document.getElementById('notice');
 const close = document.getElementById('close');
+const apply = document.getElementById('apply');
+const cvCompany = document.getElementById('cvCompany');
 
 let notice = [];
 
@@ -15,8 +17,10 @@ if (send){
     send.addEventListener('submit', e => {
         let news = {
             mess: cvName.value + ' sent an apply',
-            cvEmail: cvEmail.value
+            cvEmail: cvEmail.value,
+            cvCompany: cvCompany.value
         }
+        cvCompany.innerHTML = ``;
         socket.emit('sendCV', news);
         console.log[notice];
     })
@@ -26,7 +30,7 @@ noticeCV.addEventListener('click', e => {
     for (let i = 0; i < notice.length; i++) {
         modal.innerHTML += `<div id="notice${i}">
                                 <p>${notice[i].mess}
-                                <a href="/cv/accept/${notice[i].cvEmail}" style="text-decoration: none;
+                                <a href="/cv/accept?email=${notice[i].cvEmail}&companyName=${notice[i].cvCompany}" style="text-decoration: none;
                                  color: black; float: right; height: 20px; padding-left: 10px; padding-right: 10px;">Accept
                                 </a>
                                 <button type="button" onclick="deleteNotice(${i})" style="text-decoration: none;
@@ -49,6 +53,11 @@ close.addEventListener('click', function(e) {
     );
 })
 
+function applyCV(companyName){
+    console.log("fuck")
+    cvCompany.innerHTML += `<p>Company: ${companyName}</p>`
+}
+
 
 
 function deleteNotice(index){
@@ -57,7 +66,7 @@ function deleteNotice(index){
     for (let i = 0; i < notice.length; i++) {
         modal.innerHTML += `<div id="notice${i}">
                                 <p>${notice[i].mess}
-                                <a href="/cv/accept/${notice[i].cvEmail}" style="text-decoration: none;
+                                <a href="/cv/accept?email=${notice[i].email}&companyName=${notice[i].cvCompany}" style="text-decoration: none;
                                  color: black; float: right; height: 20px; padding-left: 10px; padding-right: 10px;">Accept
                                 </a>
                                 <button type="button" onclick="deleteNotice(${i})" style="text-decoration: none;

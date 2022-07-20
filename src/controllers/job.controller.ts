@@ -186,32 +186,32 @@ const jobController = {
         res.render('writeCV', {user: user, job: job})
     },
     searchCategory: async (req, res, next) => {
-        const jobs = await JobModel.find({category: req.query.select}).populate({path: "location", select: "name"});
+        const jobs = await JobModel.find({category: req.query.select}).populate({path:"location",select:"name"});
         const categories = await CategoryModel.find();
         const jobTypes = await JobTypeModel.find();
         const locations = await LocationModel.find();
         let user = req.session.passport.user;
-        res.render('jobs', {jobs: jobs, user: user, locations: locations, categories: categories, jobTypes: jobTypes})
+        res.render('jobs', {jobs: jobs, user: user,locations:locations, categories: categories, jobTypes: jobTypes})
     },
     searchJobTypes: async (req, res, next) => {
         console.log(req.query)
-        const jobs = await JobModel.find({jobType: req.query.select}).populate({path: "location", select: "name"});
+        const jobs = await JobModel.find({jobType: req.query.select}).populate({path:"location",select:"name"});
         console.log(jobs)
         const categories = await CategoryModel.find();
         const jobTypes = await JobTypeModel.find();
         const locations = await LocationModel.find();
         let user = req.session.passport.user;
-        res.render('jobs', {jobs: jobs, user: user, locations: locations, categories: categories, jobTypes: jobTypes})
+        res.render('jobs', {jobs: jobs, user: user,locations: locations, categories: categories, jobTypes: jobTypes})
     },
     searchJLocations: async (req, res, next) => {
         console.log(req.query)
-        const jobs = await JobModel.find({location: req.query.select}).populate({path: "location", select: "name"});
+        const jobs = await JobModel.find({location: req.query.select}).populate({path:"location",select:"name"});
         console.log(jobs)
         const categories = await CategoryModel.find();
         const jobTypes = await JobTypeModel.find();
         const locations = await LocationModel.find();
         let user = req.session.passport.user;
-        res.render('jobs', {jobs: jobs, user: user, locations: locations, categories: categories, jobTypes: jobTypes})
+        res.render('jobs', {jobs: jobs, user: user, locations: locations,categories: categories, jobTypes: jobTypes})
     },
 
     sendCV: async (req, res, next) => {
@@ -227,19 +227,33 @@ const jobController = {
 
     acceptCV: async (req, res, next) => {
         const authCtrl = new AuthCtrl();
-        await authCtrl.sendOTP(req.params.id, req, res);
-        res.redirect('/cv/jobs');
+        let mail = {
+            email: req.query.email,
+            company: req.query.companyName
+        }
+        await authCtrl.sendMail(mail, req, res);
+        res.redirect('/cv');
     },
     pagination: async (req, res, next) => {
-        let currentPage = req.query
-        const limit = 5;
-        const jobPage = await JobModel.find().limit(limit).skip(currentPage)
-        const count = await JobModel.count();
-        const pages = Math.ceil(Number(jobPage.length) / count)
-        let categories = await CategoryModel.find();
-        let locations = await LocationModel.find();
+        let perPage = 1;
+        let page = req.params.page || 1;
+        const categories = await CategoryModel.find();
         const jobTypes = await JobTypeModel.find();
-        res.render('jobs', {currentPage, pages, categories, locations, jobTypes})
+        const locations = await LocationModel.find();
+        let user = req.session.passport.user;
+
+        await JobModel
+            .find()
+            .skip((perPage * page) - perPage)
+            .limit(perPage)
+            .exec(async (err, jobs) => {
+                await JobModel.countDocuments((err, count) => {
+                    if (err) return next(err);
+                    res.render('jobs',{jobs,current: page, pages: Math.ceil(count / perPage),user: user, categories: categories, jobTypes: jobTypes, locations: locations})
+                });
+            });
+        await authCtrl.sendMail(req.params.id, req, res);
+        res.redirect('/cv');
     }
 }
 
