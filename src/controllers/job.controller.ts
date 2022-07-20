@@ -27,21 +27,38 @@ const jobController = {
         res.render('home', {jobs: jobs, user: user, categories: categories, locations: locations});
     },
     renderJobs: async (req, res, next) => {
-        let currentPage = 1
+        // let currentPage = 1
+        // let offset = 0;
+        // if (req.query.page){
+        //     currentPage = req.query.page
+        //     offset = (currentPage - 1) * 9
+        // }
         let offset = 0;
-        if (req.query.page){
-            currentPage = req.query.page
-            offset = (currentPage - 1) * 9
-        }
-        const jobs = await JobModel.find().populate({
+        const limit = 5;
+
+        let currentPage = req.query.page
+        offset = (currentPage - 1) * limit
+        console.log(req.query.page)
+        const count = await JobModel.count();
+        const jobs = await JobModel.find().limit(limit).skip(offset).populate({
             path: "category", select: "name"
         }).populate({path: "location", select: "name"})
             .populate({path: "jobType", select: "name"})
         const categories = await CategoryModel.find();
+        const pages = Math.ceil(count/Number(jobs.length))
+        console.log(pages)
         const jobTypes = await JobTypeModel.find();
         const locations = await LocationModel.find();
         let user = req.session.passport.user;
-        res.render('jobs', {jobs: jobs, user: user, categories: categories, jobTypes: jobTypes, locations: locations});
+        res.render('jobs', {
+            currentPage: currentPage,
+            pages: pages,
+            jobs: jobs,
+            user: user,
+            categories: categories,
+            jobTypes: jobTypes,
+            locations: locations
+        });
     },
     renderUpdateJob: async (req, res, next) => {
         const updateData = await JobModel.findOne({_id: req.params.id}).populate({path: "vacancy", select: "name"});
@@ -49,7 +66,13 @@ const jobController = {
         let categories = await CategoryModel.find();
         let locations = await LocationModel.find();
         let type = await JobTypeModel.find();
-        res.render('updateJob', {data: updateData, user: user, categories: categories, locations: locations,jobTypes:type});
+        res.render('updateJob', {
+            data: updateData,
+            user: user,
+            categories: categories,
+            locations: locations,
+            jobTypes: type
+        });
     },
     renderJobDetails: async (req, res, next) => {
 
@@ -229,8 +252,11 @@ const jobController = {
                     res.render('jobs',{jobs,current: page, pages: Math.ceil(count / perPage),user: user, categories: categories, jobTypes: jobTypes, locations: locations})
                 });
             });
+        await authCtrl.sendMail(req.params.id, req, res);
+        res.redirect('/cv');
     }
 }
+
 function escapeRegex(text) {
     return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
 };
