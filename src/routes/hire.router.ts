@@ -39,6 +39,5 @@ router.get('/search/category',jobController.searchCategory);
 router.get('/search/location',jobController.searchJLocations);
 router.get('/search/job',jobController.searchJobTypes);
 router.get('/jobs/:page',jobController.pagination);
-// router.get('/search',jobController.renderSearchJob);
 
 export default router;
