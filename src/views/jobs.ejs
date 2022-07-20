@@ -220,13 +220,15 @@
                                                 <li><%=job.salary%>$</li>
                                             </ul>
                                         </div>
+                                        <br>
+
                                     </div>
                                     <% if (user.role === 'recruiter') { %>
-                                    <div class="items-link f-right">
+                                    <div class="items-link ">
                                         <a href="/cv/apply/<%=job._id%>">Details</a>
                                     </div>
                                     <%}else{%>
-                                    <div class="items-link f-right">
+                                    <div class="items-link ">
                                         <a href="/cv/apply/<%=job._id%>">Apply</a>
                                     </div>
                                     <%}%>
@@ -241,25 +243,7 @@
             </div>
         </div>
     </div>
-    <!-- Job List Area End -->
-    <!--Pagination Start  -->
-    <div class="pagination-area pb-115 text-center">
-        <div class="container">
-            <div class="row">
-                <div class="col-xl-12">
-                    <div class="single-wrap d-flex justify-content-center">
-                        <nav aria-label="Page navigation example">
-                            <ul class="pagination justify-content-start">
 
-                                <li class="page-item active"><a class="page-link" href="/cv/jobs/:<%=current%>>">01</a></li>
-                                <li class="page-item"><a class="page-link" href="#"><span class="ti-angle-right"></span></a></li>
-                            </ul>
-                        </nav>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
 
 </main>
 <%- include ('./partials/footer.ejs')-%>
