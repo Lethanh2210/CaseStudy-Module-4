@@ -88,12 +88,12 @@
                                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                         <a class="dropdown-item" href="#">Action</a>
                                         <a class="dropdown-item" href="#">Another action</a>
-                                        <a class="dropdown-item" href="http://localhost:3000/auth/logout">Log Out</a>
+                                        <a class="dropdown-item" onclick="return confirm('Are you sure you want to logout?')" href="http://localhost:3000/auth/logout " >Log Out</a>
                                     </div>
                             <%}else{%>
                                 <div class="header-btn d-none f-right d-lg-block">
                                     <a href="http://localhost:3000/auth/register" class="btn head-btn1">Register</a>
-                                    <a href="http://localhost:3000/auth/logout" class="btn head-btn2">Log Out</a>
+                                    <a href="http://localhost:3000/auth/logout"  onclick="return confirm('Are you sure you want to logout?')" class="btn head-btn2">Log Out</a>
                                 </div>
                             <%}%>
                         </div>
