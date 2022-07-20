@@ -201,36 +201,39 @@
                             </div>
                             <!-- Count of Job list End -->
                             <!-- single-job-content -->
-                            <div class="single-job-items mb-30">
                                 <% for (let job of jobs) { %>
                                 <!-- single-job-content -->
                                 <div class="single-job-items mb-30">
                                     <div class="job-items">
-                                        <div class="company-img">
-                                            <img style="width: 150px;" class="mb-3" src="<%=job.avatar%>" alt="">
+                                        <div class="company-img" style="text-align: left;" >
+                                            <img style="width: 150px; height: 150px;" class="mb-3" src="<%=job.avatar%>" alt="">
+                                            <br>
+                                            <div style="float: left;">
+                                                <span>Duration: <%=job.duration ? job.duration : "none"%></span>
+                                            </div>
                                         </div>
                                         <div class="job-tittle">
                                             <a href="job_details.html"><h4><%=job.jobName%></h4></a>
                                             <ul>
                                                 <li><%=job.companyName%></li>
-                                                <li><i class="fas fa-map-marker-alt"></i><%= job.location ? job.location.name : "none"%></li>
+                                                <li><i class="fas fa-map-marker-alt"></i><%=job.location ? job.location.name : "none"%></li>
                                                 <li><%=job.salary%>$</li>
                                             </ul>
                                         </div>
                                     </div>
+                                    <% if (user.role === 'recruiter') { %>
                                     <div class="items-link f-right">
-                                        <% if (user.role === 'recruiter') { %>
-                                        <a href="/cv/updateJob/<%=job._id%>">Update</a>
-                                        <a href="/cv/deleteJob/<%=job._id%>">Delete</a>
-                                        <%}else{%>
-                                        <a href="/cv/apply/<%=job._id%>">Apply</a>
-                                        <%}%>
-                                        <span>Duration: <%=job.duration%></span>
+                                        <a href="/cv/apply/<%=job._id%>">Details</a>
                                     </div>
+                                    <%}else{%>
+                                    <div class="items-link f-right">
+                                        <a href="/cv/apply/<%=job._id%>">Apply</a>
+                                    </div>
+                                    <%}%>
                                 </div>
                                 <% } %>
                             </div>
-                        </div>
+
                     </section>
 
                     <!-- Featured_job_end -->

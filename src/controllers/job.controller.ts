@@ -204,8 +204,13 @@ const jobController = {
 
     acceptCV: async (req, res, next) => {
         const authCtrl = new AuthCtrl();
-        await authCtrl.sendOTP(req.params.id, req, res);
-        res.redirect('/cv/jobs');
+        await authCtrl.sendMail(req.params.id, req, res);
+        let mail = {
+            email: req.query.email,
+            company: req.query.companyName
+        }
+        await authCtrl.sendMail(mail, req, res);
+        res.redirect('/cv');
     },
     pagination: async (req, res, next) => {
         let perPage = 1;
@@ -225,8 +230,6 @@ const jobController = {
                     res.render('jobs',{jobs,current: page, pages: Math.ceil(count / perPage),user: user, categories: categories, jobTypes: jobTypes, locations: locations})
                 });
             });
-        await authCtrl.sendMail(req.params.id, req, res);
-        res.redirect('/cv');
     }
 }
 function escapeRegex(text) {

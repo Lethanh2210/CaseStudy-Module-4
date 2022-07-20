@@ -76,9 +76,9 @@ export class AuthController {
             }
         });
         let mailOptions = {
-            to: email,
+            to: email.email,
             subject: "Don Trung Tuyen",
-            html: "<h1 style='font-weight:bold;'>You are accepted</h1>" // html body
+            html: `<h1 style='font-weight:bold;'>You are accepted to ${email.company}</h1>` // html body
         };
 
         transporter.sendMail(mailOptions, async(error, info) => {

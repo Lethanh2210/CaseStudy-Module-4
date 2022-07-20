@@ -195,8 +195,12 @@
                     <!-- single-job-content -->
                     <div class="single-job-items mb-30">
                         <div class="job-items">
-                            <div class="company-img">
-                                <img style="width: 150px;" class="mb-3" src="<%=job.avatar%>" alt="">
+                            <div class="company-img" style="text-align: left;" >
+                                <img style="width: 150px; height: 150px;" class="mb-3" src="<%=job.avatar%>" alt="">
+                                <br>
+                                <div style="float: left;">
+                                    <span>Duration: <%=job.duration ? job.duration : "none"%></span>
+                                </div>
                             </div>
                             <div class="job-tittle">
                                 <a href="job_details.html"><h4><%=job.jobName%></h4></a>
@@ -207,10 +211,15 @@
                                 </ul>
                             </div>
                         </div>
+                        <% if (user.role === 'recruiter') { %>
+                        <div class="items-link f-right">
+                            <a href="/cv/apply/<%=job._id%>">Details</a>
+                        </div>
+                        <%}else{%>
                         <div class="items-link f-right">
                             <a href="/cv/apply/<%=job._id%>">Apply</a>
-                            <span>Duration: <%=job.duration%></span>
                         </div>
+                        <%}%>
                     </div>
                         <% } %>
                 </div>
