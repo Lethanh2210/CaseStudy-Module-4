@@ -100,7 +100,7 @@
                             </div>
                         <%}else{%>
                         <div class="apply-btn2">
-                            <a class="btn" data-toggle="modal" data-target="#exampleModal" style="color: #fff; ">Apply Now</a>
+                            <p class="btn" data-toggle="modal" data-target="#exampleModal" style="color: #fff;" id="apply" onclick="applyCV(<%= job.companyName%>)">Apply Now</p>
                         </div>
                         <%}%>
                     </div>
@@ -132,8 +132,13 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        Name: <input type="text" id="cvName">
-                        Email: <input type="email" id="cvEmail">
+                        <p>Name: </p>
+                        <input type="text" id="cvName">
+                        <br>
+                        <p>Your Email:</p>
+                        <input type="email" id="cvEmail">
+                        <p>Company: </p>
+                        <input type="text" id="cvCompany" value="<%= job.companyName%>" readonly>
                         <input id="files"  type="file">
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fa fa-close"></i>Close</button>

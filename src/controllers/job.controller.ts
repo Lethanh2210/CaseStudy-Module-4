@@ -197,7 +197,11 @@ const jobController = {
 
     acceptCV: async (req, res, next) => {
         const authCtrl = new AuthCtrl();
-        await authCtrl.sendMail(req.params.id, req, res);
+        let mail = {
+            email: req.query.email,
+            company: req.query.companyName
+        }
+        await authCtrl.sendMail(mail, req, res);
         res.redirect('/cv');
     }
 }
