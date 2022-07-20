@@ -16,6 +16,7 @@ const jobController = {
                 jobName: jobNameFind
             }
         }
+
         const jobs = await JobModel.find(query).populate({
             path: "category", select: "name"
         }).populate({path: "location", select: "name"});
@@ -26,6 +27,12 @@ const jobController = {
         res.render('home', {jobs: jobs, user: user, categories: categories, locations: locations});
     },
     renderJobs: async (req, res, next) => {
+        let currentPage = 1
+        let offset = 0;
+        if (req.query.page){
+            currentPage = req.query.page
+            offset = (currentPage - 1) * 9
+        }
         const jobs = await JobModel.find().populate({
             path: "category", select: "name"
         }).populate({path: "location", select: "name"})
@@ -197,12 +204,32 @@ const jobController = {
 
     acceptCV: async (req, res, next) => {
         const authCtrl = new AuthCtrl();
+        await authCtrl.sendMail(req.params.id, req, res);
         let mail = {
             email: req.query.email,
             company: req.query.companyName
         }
         await authCtrl.sendMail(mail, req, res);
         res.redirect('/cv');
+    },
+    pagination: async (req, res, next) => {
+        let perPage = 1;
+        let page = req.params.page || 1;
+        const categories = await CategoryModel.find();
+        const jobTypes = await JobTypeModel.find();
+        const locations = await LocationModel.find();
+        let user = req.session.passport.user;
+
+        await JobModel
+            .find()
+            .skip((perPage * page) - perPage)
+            .limit(perPage)
+            .exec(async (err, jobs) => {
+                await JobModel.countDocuments((err, count) => {
+                    if (err) return next(err);
+                    res.render('jobs',{jobs,current: page, pages: Math.ceil(count / perPage),user: user, categories: categories, jobTypes: jobTypes, locations: locations})
+                });
+            });
     }
 }
 function escapeRegex(text) {
