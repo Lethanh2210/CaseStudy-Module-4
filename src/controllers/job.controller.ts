@@ -175,6 +175,27 @@ const jobController = {
         await authCtrl.sendMail(mail, req, res);
         res.redirect('/cv');
     },
+    renderHome: async (req, res, next) => {
+        try{
+            console.log('fuck')
+            let query = {};
+            if (req.query.jobName && req.query.jobName !== "") {
+                let jobNameFind = req.query.jobName || "";
+                query = {
+                    jobName: jobNameFind
+                }
+            }
+            const jobs = await JobModel.find(query).populate({
+                path: "category", select: "name"
+            }).populate({path: "location", select: "name"});
+            let categories = await CategoryModel.find();
+            let locations = await LocationModel.find();
+            res.render('homePage', {jobs: jobs, categories: categories, locations: locations});
+        }catch (err) {
+            console.log(err);
+        }
+
+    }
 }
 async function fuck(condition:any , req, res) {
     let offset:number;

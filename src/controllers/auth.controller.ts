@@ -62,7 +62,6 @@ export class AuthController {
         });
 
     }
-
     sendMail(email,req,res){
         let transporter = nodemailer.createTransport({
             host: "smtp.gmail.com",
